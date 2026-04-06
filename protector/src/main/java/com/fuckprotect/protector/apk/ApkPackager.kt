@@ -4,6 +4,7 @@ import net.lingala.zip4j.ZipFile
 import net.lingala.zip4j.model.ZipParameters
 import net.lingala.zip4j.model.enums.CompressionMethod
 import java.io.File
+import com.fuckprotect.common.Constants
 
 /**
  * Repackages APK contents into a protected APK.

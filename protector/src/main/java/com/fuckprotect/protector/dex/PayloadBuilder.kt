@@ -113,7 +113,7 @@ class PayloadBuilder {
         dos.write(crc)
 
         // 7. Write total payload length (everything including this field)
-        val totalLength = allData.size + Constants.CRC32_SIZE_BYTES + Constants.INT_SIZE_BYTES
+        val totalLength = allData.size + Constants.CRC32_SIZE_BYTES + Constants.INT_SIZE
         dos.writeInt(totalLength)
 
         dos.flush()
@@ -122,7 +122,7 @@ class PayloadBuilder {
         // Sanity check: the last 4 bytes should be the total length
         val checkLength = payload.size
         val writtenLength = payload.sliceArray(
-            payload.size - Constants.INT_SIZE_BYTES until payload.size
+            payload.size - Constants.INT_SIZE until payload.size
         ).let {
             ((it[0].toInt() and 0xFF) shl 24) or
                     ((it[1].toInt() and 0xFF) shl 16) or

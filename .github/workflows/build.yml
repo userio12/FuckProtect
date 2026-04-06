@@ -93,16 +93,21 @@ jobs:
       - name: Verify native libraries exist
         run: |
           echo "Checking native libraries..."
+          found=0
           for abi in arm64-v8a armeabi-v7a x86 x86_64; do
-            lib="shell/build/intermediates/cxx/Debug/obj/$abi/libshell.so"
-            if [ -f "$lib" ]; then
+            lib=$(find shell/build -name "libshell.so" -path "*/$abi/*" 2>/dev/null | head -1)
+            if [ -n "$lib" ]; then
               size=$(stat -c%s "$lib")
               echo "  ✅ $abi: libshell.so ($size bytes)"
+              found=$((found + 1))
             else
               echo "  ❌ $abi: libshell.so NOT FOUND"
-              exit 1
             fi
           done
+          if [ $found -lt 4 ]; then
+            echo "ERROR: Only found $found of 4 native libraries"
+            exit 1
+          fi
 
       - name: Check for plaintext strings in native library
         run: |
@@ -128,7 +133,8 @@ jobs:
         with:
           name: shell-native-libs
           path: |
-            shell/build/intermediates/cxx/Debug/obj/
+            shell/build/intermediates/cxx/**/libshell.so
+            shell/build/outputs/aar/*.aar
           retention-days: 30
 
   # ──────────────────────────────────────────────────────────────────────
