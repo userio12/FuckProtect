@@ -1,3 +1,4 @@
+#pragma once
 /**
  * PLT/GOT integrity check for FuckProtect shell.
  *

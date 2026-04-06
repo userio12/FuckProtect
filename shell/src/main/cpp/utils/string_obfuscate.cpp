@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Encrypted string storage and runtime decryption for FuckProtect shell.
  *

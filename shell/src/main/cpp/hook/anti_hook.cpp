@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Anti-hooking measures for FuckProtect shell.
  *

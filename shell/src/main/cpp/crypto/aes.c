@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Tiny AES-256-CBC implementation (public domain, based on tiny-aes-c).
  *
@@ -63,7 +64,7 @@ static const uint8_t Rcon[15] = {
 /* ─── Key expansion ───────────────────────────────────────────────── */
 
 static void key_expansion_256(const uint8_t *key, uint8_t *round_key) {
-    int i, j, k;
+    int i, j;
 
     /* Copy the original key */
     for (i = 0; i < AES_KEYLEN_256; i++) {

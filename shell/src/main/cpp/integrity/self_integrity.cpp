@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Native self-integrity check for FuckProtect shell.
  *

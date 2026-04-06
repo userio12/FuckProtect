@@ -1,3 +1,4 @@
+#pragma once
 /**
  * APK signature verification for FuckProtect shell.
  *
@@ -19,7 +20,7 @@
 #define SIG_TAG "FP_Signature"
 #define SIG_LOG(fmt, ...) \
     __android_log_print(ANDROID_LOG_DEBUG, SIG_TAG, fmt, ##__VA_ARGS__)
-#define SIG_ERR(fmt, ...) \
+#define SIG_LOG_ERR(fmt, ...) \
     __android_log_print(ANDROID_LOG_ERROR, SIG_TAG, fmt, ##__VA_ARGS__)
 
 /**
@@ -33,18 +34,18 @@
  * @return APK path string (must be freed), or NULL on error
  */
 static char *get_apk_path(JNIEnv *env, jobject context) {
-    jclass ctxClass = (*env)->GetObjectClass(env, context);
+    jclass ctxClass = env->GetObjectClass(context);
     jmethodID getApkPathId = (*env)->GetMethodID(
         env, ctxClass, "getPackageResourcePath", "()Ljava/lang/String;"
     );
     if (getApkPathId == NULL) return NULL;
 
-    jstring jPath = (jstring)(*env)->CallObjectMethod(env, context, getApkPathId);
+    jstring jPath = (jstring)env->CallObjectMethod(context, getApkPathId);
     if (jPath == NULL) return NULL;
 
-    const char *cPath = (*env)->GetStringUTFChars(env, jPath, NULL);
+    const char *cPath = env->GetStringUTFChars(jPath, NULL);
     char *result = strdup(cPath);
-    (*env)->ReleaseStringUTFChars(env, jPath, cPath);
+    env->ReleaseStringUTFChars(jPath, cPath);
 
     return result;
 }
@@ -84,28 +85,28 @@ Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeVerifySignature(
     JNIEnv *env, jclass clazz, jbyteArray currentCertHash
 ) {
     if (currentCertHash == NULL) {
-        SIG_ERR("Null certificate hash");
+        SIG_LOG_ERR("Null certificate hash");
         return JNI_FALSE;
     }
 
-    jsize hashLen = (*env)->GetArrayLength(env, currentCertHash);
+    jsize hashLen = env->GetArrayLength(currentCertHash);
     if (hashLen != 32) {
-        SIG_ERR("Invalid certificate hash length: %d (expected 32)", hashLen);
+        SIG_LOG_ERR("Invalid certificate hash length: %d (expected 32)", hashLen);
         return JNI_FALSE;
     }
 
-    jbyte *hashBytes = (*env)->GetByteArrayElements(env, currentCertHash, NULL);
+    jbyte *hashBytes = env->GetByteArrayElements(currentCertHash, NULL);
     if (hashBytes == NULL) return JNI_FALSE;
 
     /* Constant-time comparison */
     int result = verify_cert_hash((const uint8_t *)hashBytes);
 
-    (*env)->ReleaseByteArrayElements(env, currentCertHash, hashBytes, JNI_ABORT);
+    env->ReleaseByteArrayElements(currentCertHash, hashBytes, JNI_ABORT);
 
     if (result) {
         SIG_LOG("Signature verification PASSED");
     } else {
-        SIG_ERR("Signature verification FAILED — APK may be tampered");
+        SIG_LOG_ERR("Signature verification FAILED — APK may be tampered");
     }
 
     return result ? JNI_TRUE : JNI_FALSE;
@@ -123,9 +124,9 @@ Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeGetExpectedHash(
     uint8_t hash[32];
     get_embedded_cert_hash(hash);
 
-    jbyteArray result = (*env)->NewByteArray(env, 32);
+    jbyteArray result = env->NewByteArray(32);
     if (result != NULL) {
-        (*env)->SetByteArrayRegion(env, result, 0, 32, (jbyte *)hash);
+        env->SetByteArrayRegion(result, 0, 32, (jbyte *)hash);
     }
     return result;
 }

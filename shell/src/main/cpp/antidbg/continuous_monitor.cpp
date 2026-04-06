@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Continuous background monitoring for FuckProtect shell.
  *

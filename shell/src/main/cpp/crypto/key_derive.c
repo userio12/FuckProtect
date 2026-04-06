@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Key derivation for DEX decryption.
  *

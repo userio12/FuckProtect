@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Anti-debugging checks for FuckProtect shell.
  *
@@ -25,9 +26,9 @@
 
 #define ADBG_TAG "FP_AntiDebug"
 #define ADBG_LOG(fmt, ...) \
-    __android_log_print(ANDROID_LOG_DEBUG, ADAG_TAG, fmt, ##__VA_ARGS__)
+    __android_log_print(ANDROID_LOG_DEBUG, ADBG_TAG, fmt, ##__VA_ARGS__)
 #define ADBG_ERR(fmt, ...) \
-    __android_log_print(ANDROID_LOG_ERROR, ADAG_TAG, fmt, ##__VA_ARGS__)
+    __android_log_print(ANDROID_LOG_ERROR, ADBG_TAG, fmt, ##__VA_ARGS__)
 
 /* Use direct syscall for ptrace to avoid PLT hooks */
 static long my_ptrace(long request, long pid, void *addr, void *data) {
