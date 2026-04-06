@@ -14,14 +14,11 @@ dependencies {
     implementation(libs.zip4j)
     implementation(libs.bouncycastle)
     implementation(libs.kotlinx.coroutines)
-    implementation(gradleApi())
+    // Only pull in the Gradle API types we need, not the full runtime
+    compileOnly(gradleApi())
 
     testImplementation(kotlin("test"))
     testImplementation(libs.kotlinx.coroutines)
-}
-
-configurations.runtimeClasspath {
-    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
 }
 
 java {
