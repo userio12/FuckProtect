@@ -1,8 +1,8 @@
 package com.fuckprotect.protector.res;
 
 import com.android.aapt.Resources;
-import com.luoye.dpt.util.IoUtils;
-import com.luoye.dpt.util.LogUtils;
+import com.fuckprotect.protector.util.IoUtils;
+import com.fuckprotect.protector.util.LogUtils;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

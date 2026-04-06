@@ -1,6 +1,6 @@
 package com.fuckprotect.protector.util;
 
-import com.luoye.dpt.config.Const;
+import com.fuckprotect.protector.config.Const;
 
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;

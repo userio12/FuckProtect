@@ -1,11 +1,11 @@
 package com.fuckprotect.protector.builder;
 
-import com.luoye.dpt.config.ShellConfig;
-import com.luoye.dpt.res.AabManifestEditor;
-import com.luoye.dpt.util.FileUtils;
-import com.luoye.dpt.util.KeyUtils;
-import com.luoye.dpt.util.LogUtils;
-import com.luoye.dpt.util.ZipUtils;
+import com.fuckprotect.protector.config.ShellConfig;
+import com.fuckprotect.protector.res.AabManifestEditor;
+import com.fuckprotect.protector.util.FileUtils;
+import com.fuckprotect.protector.util.KeyUtils;
+import com.fuckprotect.protector.util.LogUtils;
+import com.fuckprotect.protector.util.ZipUtils;
 
 import java.io.File;
 import java.io.IOException;

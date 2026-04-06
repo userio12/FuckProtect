@@ -1,6 +1,6 @@
 package com.fuckprotect.protector.task;
 
-import com.luoye.dpt.config.Const;
+import com.fuckprotect.protector.config.Const;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;

@@ -3,7 +3,7 @@
 import android.content.Context;
 import android.util.Log;
 
-import com.luoyesiqiu.shell.Global;
+import com.fuckprotect.shell.Global;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

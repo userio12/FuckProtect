@@ -1,6 +1,6 @@
 package com.fuckprotect.protector.util;
 
-import com.luoye.dpt.Dpt;
+import com.fuckprotect.protector.Dpt;
 
 import java.io.File;
 import java.io.IOException;

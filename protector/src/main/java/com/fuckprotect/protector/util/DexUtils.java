@@ -19,8 +19,8 @@ import com.android.tools.smali.dexlib2.rewriter.Rewriter;
 import com.android.tools.smali.dexlib2.rewriter.RewriterModule;
 import com.android.tools.smali.dexlib2.rewriter.Rewriters;
 import com.android.tools.smali.dexlib2.rewriter.TypeRewriter;
-import com.luoye.dpt.config.ProtectRules;
-import com.luoye.dpt.model.Instruction;
+import com.fuckprotect.protector.config.ProtectRules;
+import com.fuckprotect.protector.model.Instruction;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -257,7 +257,7 @@ public class DexUtils {
                     public String rewrite(String value) {
                         int index = value.lastIndexOf("/");
                         String className = value.substring(index + 1, value.length() - 1);
-                        if(value.startsWith("Lcom/luoyesiqiu") || value.startsWith("Lcom/luoye")) {
+                        if(value.startsWith("Lcom/fuckprotect") || value.startsWith("Lcom/fuckprotect")) {
                             return String.format(Locale.US, "L%s/%s;", slashShellPackageName, className);
                         }
                         return value;

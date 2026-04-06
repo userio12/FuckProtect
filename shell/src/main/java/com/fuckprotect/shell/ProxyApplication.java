@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.luoyesiqiu.shell.util.FileUtils;
+import com.fuckprotect.shell.util.FileUtils;
 
 /**
  * Created by luoyesiqiu

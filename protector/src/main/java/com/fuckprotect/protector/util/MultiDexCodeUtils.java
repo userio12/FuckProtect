@@ -1,9 +1,9 @@
 package com.fuckprotect.protector.util;
 
-import com.luoye.dpt.config.Const;
-import com.luoye.dpt.model.DexCode;
-import com.luoye.dpt.model.Instruction;
-import com.luoye.dpt.model.MultiDexCode;
+import com.fuckprotect.protector.config.Const;
+import com.fuckprotect.protector.model.DexCode;
+import com.fuckprotect.protector.model.Instruction;
+import com.fuckprotect.protector.model.MultiDexCode;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
