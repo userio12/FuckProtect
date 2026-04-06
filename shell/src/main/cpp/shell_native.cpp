@@ -14,6 +14,7 @@
 #include "crypto/key_derive.c"    /* Key derivation + cert hash verification */
 #include "antidbg/anti_debug.cpp" /* Anti-debugging checks */
 #include "antidbg/continuous_monitor.cpp" /* Continuous monitoring + emulator detect */
+#include "antidbg/protect_process.cpp" /* Child process protection */
 #include "integrity/self_check.cpp"   /* Signature / APK integrity */
 #include "integrity/self_integrity.cpp" /* Native self-integrity */
 #include "hook/anti_hook.cpp"     /* Anti-hooking measures */
@@ -207,6 +208,10 @@ Java_com_fuckprotect_shell_ShellApplication_nativeInitWithContext(
     int enable_emulator = 0;
     monitor_start(action, enable_emulator);
     LOGD("nativeInit: continuous monitoring started");
+
+    /* ─── Step 7: Create child monitor process ─────────────────────── */
+    protect_process();
+    LOGD("nativeInit: child process protection started");
 
     LOGD("nativeInit: all initialization checks passed");
 }
