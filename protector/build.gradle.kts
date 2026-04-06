@@ -15,12 +15,18 @@ dependencies {
     implementation(libs.bouncycastle)
     implementation(libs.kotlinx.coroutines)
     implementation(gradleApi())
-    configurations.runtimeClasspath {
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-    }
 
     testImplementation(kotlin("test"))
     testImplementation(libs.kotlinx.coroutines)
+}
+
+// Exclude kotlin-stdlib from runtime to avoid duplicates in distributions
+configurations.all {
+    exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+}
+// But we still need it for compilation
+dependencies {
+    implementation(kotlin("stdlib"))
 }
 
 java {
