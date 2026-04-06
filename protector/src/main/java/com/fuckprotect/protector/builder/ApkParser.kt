@@ -1,4 +1,4 @@
-package com.fuckprotect.protector.apk
+package com.fuckprotect.protector.builder
 
 import net.lingala.zip4j.ZipFile
 import net.lingala.zip4j.model.FileHeader

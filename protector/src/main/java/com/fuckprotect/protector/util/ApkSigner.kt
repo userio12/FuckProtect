@@ -1,4 +1,4 @@
-package com.fuckprotect.protector.apk
+package com.fuckprotect.protector.util
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.io.File

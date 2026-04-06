@@ -29,18 +29,18 @@
 #define SHF_EXECINSTR 0x4
 #endif
 
-#include "crypto/aes.c"           /* AES-256-CBC + PKCS#7 */
-#include "crypto/key_derive.c"    /* Key derivation + cert hash verification */
-#include "rc4/rc4.c"              /* RC4 for .so section decryption */
-#include "antidbg/anti_debug.cpp" /* Anti-debugging checks */
-#include "antidbg/continuous_monitor.cpp" /* Continuous monitoring + emulator detect */
-#include "antidbg/protect_process.cpp" /* Child process protection */
-#include "integrity/self_check.cpp"   /* Signature / APK integrity */
-#include "integrity/self_integrity.cpp" /* Native self-integrity */
-#include "hook/anti_hook.cpp"     /* Anti-hooking measures */
-#include "hook/plt_check.cpp"     /* PLT/GOT integrity */
-#include "hook/art_hook.cpp"      /* ART method hooking for hollowed methods */
-#include "utils/string_obfuscate.cpp" /* Encrypted strings */
+#include "dpt_risk.cpp"
+#include "dpt_util.cpp"
+#include "dpt_protect.cpp"
+#include "dpt_hook.cpp"
+#include "dpt_plt.cpp"
+#include "dpt_anti_hook.cpp"
+#include "dpt_verify.cpp"
+#include "dpt_integrity.cpp"
+#include "dpt_crypto.c"
+#include "dpt_key.c"
+#include "rc4/rc4.c"
+#include "common/dpt_string.cpp"
 
 /* Log macros using encrypted strings */
 static char _log_tag_buf[32];
@@ -219,7 +219,7 @@ static int parse_payload(
  * Performs: anti-debugging, signature verification, anti-hooking, integrity.
  */
 JNIEXPORT void JNICALL
-Java_com_fuckprotect_shell_ShellApplication_nativeInitWithContext(
+Java_com_fuckprotect_shell_JniBridge_nativeInitWithContext(
     JNIEnv *env, jobject /*thiz*/, jobject context
 ) {
     LOGD("nativeInit: FuckProtect shell initializing...");
@@ -352,7 +352,7 @@ Java_com_fuckprotect_shell_ShellApplication_nativeInitWithContext(
  * JNI: nativeInit() — legacy overload (anti-debugging only).
  */
 JNIEXPORT void JNICALL
-Java_com_fuckprotect_shell_ShellApplication_nativeInit(
+Java_com_fuckprotect_shell_JniBridge_nativeInit(
     JNIEnv * /*env*/, jobject /*thiz*/
 ) {
     anti_debug_init();
@@ -364,7 +364,7 @@ Java_com_fuckprotect_shell_ShellApplication_nativeInit(
  * Decrypts the DEX from the encrypted payload.
  */
 JNIEXPORT jbyteArray JNICALL
-Java_com_fuckprotect_shell_ShellApplication_nativeDecryptDex(
+Java_com_fuckprotect_shell_JniBridge_nativeDecryptDex(
     JNIEnv *env, jobject /*thiz*/, jbyteArray payload
 ) {
     if (payload == NULL) {
@@ -457,7 +457,7 @@ Java_com_fuckprotect_shell_ShellApplication_nativeDecryptDex(
 /* ─── Test helpers ──────────────────────────────────────────────────── */
 
 JNIEXPORT void JNICALL
-Java_com_fuckprotect_shell_antidbg_AntiDebugTestNative_nativeAntiDebugInit(
+Java_com_fuckprotect_shell_JniBridge_testAntiDebug(
     JNIEnv * /*env*/, jobject /*thiz*/
 ) {
     anti_debug_init();
@@ -476,7 +476,7 @@ Java_com_fuckprotect_shell_antidbg_AntiDebugTestNative_nativeAntiDebugInit(
 static char g_originalComponentFactory[256] = {0};
 
 JNIEXPORT jstring JNICALL
-Java_com_fuckprotect_shell_factory_ProxyComponentFactory_getOriginalComponentFactory(
+Java_com_fuckprotect_shell_JniBridge_getOriginalComponentFactory(
     JNIEnv *env, jclass /*clazz*/
 ) {
     if (g_originalComponentFactory[0] == '\0') {
@@ -486,7 +486,7 @@ Java_com_fuckprotect_shell_factory_ProxyComponentFactory_getOriginalComponentFac
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_fuckprotect_shell_factory_ProxyComponentFactory_getOriginalApplicationName(
+Java_com_fuckprotect_shell_JniBridge_getOriginalApplicationName(
     JNIEnv *env, jclass /*clazz*/
 ) {
     // Same as ShellApplication - read from stored value
@@ -499,7 +499,7 @@ Java_com_fuckprotect_shell_factory_ProxyComponentFactory_getOriginalApplicationN
  * This is the same as nativeInitWithContext but called from the factory.
  */
 JNIEXPORT void JNICALL
-Java_com_fuckprotect_shell_factory_ProxyComponentFactory_initShell(
+Java_com_fuckprotect_shell_JniBridge_initShell(
     JNIEnv *env, jclass /*clazz*/
 ) {
     // Run anti-debugging and integrity checks
@@ -515,7 +515,7 @@ Java_com_fuckprotect_shell_factory_ProxyComponentFactory_initShell(
  * Replace the class loader — delegates to the same logic as ShellApplication.
  */
 JNIEXPORT void JNICALL
-Java_com_fuckprotect_shell_factory_ProxyComponentFactory_replaceClassLoader(
+Java_com_fuckprotect_shell_JniBridge_replaceClassLoader(
     JNIEnv * /*env*/, jclass /*clazz*/, jobject /*targetClassLoader*/
 ) {
     // This is handled by the existing ClassLoaderProxy Java class
@@ -526,7 +526,7 @@ Java_com_fuckprotect_shell_factory_ProxyComponentFactory_replaceClassLoader(
  * Set the original AppComponentFactory name (called from Java during initialization).
  */
 JNIEXPORT void JNICALL
-Java_com_fuckprotect_shell_factory_ProxyComponentFactory_nativeSetOriginalFactory(
+Java_com_fuckprotect_shell_JniBridge_nativeSetOriginalFactory(
     JNIEnv *env, jclass /*clazz*/, jstring factoryName
 ) {
     if (factoryName == NULL) {

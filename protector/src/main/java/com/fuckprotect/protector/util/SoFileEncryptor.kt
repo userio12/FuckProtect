@@ -1,4 +1,4 @@
-package com.fuckprotect.protector.native
+package com.fuckprotect.protector.util
 
 import java.io.File
 import java.io.RandomAccessFile

@@ -1,4 +1,4 @@
-package com.fuckprotect.protector.embedder
+package com.fuckprotect.protector.util
 
 import com.fuckprotect.common.Constants
 import java.io.File

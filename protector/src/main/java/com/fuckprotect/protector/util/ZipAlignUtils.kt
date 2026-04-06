@@ -1,4 +1,4 @@
-package com.fuckprotect.protector.apk
+package com.fuckprotect.protector.util
 
 import java.io.File
 

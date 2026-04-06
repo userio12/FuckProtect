@@ -1,4 +1,4 @@
-package com.fuckprotect.protector.apk
+package com.fuckprotect.protector.res
 
 import com.fuckprotect.common.Constants
 import java.io.File
