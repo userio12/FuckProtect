@@ -8,10 +8,30 @@
 #include <jni.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <android/log.h>
+#include <sys/mman.h>
+#include <elf.h>
+#include <link.h>
+#include <sys/sysconf.h>
+
+/* Section header type constants */
+#ifndef SHT_SYMTAB
+#define SHT_SYMTAB 2
+#endif
+#ifndef SHT_DYNSYM
+#define SHT_DYNSYM 11
+#endif
+#ifndef SHF_ALLOC
+#define SHF_ALLOC 0x2
+#endif
+#ifndef SHF_EXECINSTR
+#define SHF_EXECINSTR 0x4
+#endif
 
 #include "crypto/aes.c"           /* AES-256-CBC + PKCS#7 */
 #include "crypto/key_derive.c"    /* Key derivation + cert hash verification */
+#include "rc4/rc4.c"              /* RC4 for .so section decryption */
 #include "antidbg/anti_debug.cpp" /* Anti-debugging checks */
 #include "antidbg/continuous_monitor.cpp" /* Continuous monitoring + emulator detect */
 #include "antidbg/protect_process.cpp" /* Child process protection */
@@ -37,6 +57,109 @@ static char _log_tag_buf[32];
 
 /* Flag bits (must match PayloadHeader.Flags in Kotlin) */
 #define FLAG_SIGNATURE_VERIFICATION 0x04
+
+/**
+ * Decrypt RC4-encrypted sections of our own native library.
+ *
+ * The protector encrypts .bitcode/.rodata sections with RC4 and embeds
+ * the key at a known location. This function:
+ * 1. Finds our own library's base address
+ * 2. Locates the RC4 key
+ * 3. Decrypts the encrypted sections in-place
+ */
+static void decrypt_so_sections(void) {
+    /* Get our own library's base address from /proc/self/maps */
+    FILE *fp = fopen("/proc/self/maps", "r");
+    if (!fp) return;
+
+    char line[512];
+    uintptr_t our_base = 0;
+    char our_path[512] = {0};
+
+    while (fgets(line, sizeof(line), fp)) {
+        if (strstr(line, "libshell.so") && strstr(line, "r-xp")) {
+            char *dash = strchr(line, '-');
+            if (dash) {
+                *dash = '\0';
+                our_base = (uintptr_t)strtoul(line, NULL, 16);
+                char *path_start = strchr(dash + 1, ' ');
+                while (path_start && *path_start == ' ') path_start++;
+                if (path_start) {
+                    char *path_end = strchr(path_start, '\n');
+                    if (path_end) *path_end = '\0';
+                    strncpy(our_path, path_start, sizeof(our_path) - 1);
+                }
+            }
+            break;
+        }
+    }
+    fclose(fp);
+
+    if (our_base == 0) return;
+
+    /* Read the ELF header to find section headers */
+    ElfW(Ehdr) *ehdr = (ElfW(Ehdr) *)our_base;
+    if (ehdr->e_ident[0] != 0x7F || ehdr->e_ident[1] != 'E' ||
+        ehdr->e_ident[2] != 'L' || ehdr->e_ident[3] != 'F') {
+        return;
+    }
+
+    ElfW(Shdr) *shdr = (ElfW(Shdr) *)(our_base + ehdr->e_shoff);
+    const char *shstrtab = (const char *)(our_base + shdr[ehdr->e_shstrndx].sh_offset);
+
+    /* Find the RC4 key symbol */
+    uint8_t rc4_key[16] = {0};
+    int key_found = 0;
+
+    for (int i = 0; i < ehdr->e_shnum; i++) {
+        if (shdr[i].sh_type == SHT_SYMTAB || shdr[i].sh_type == SHT_DYNSYM) {
+            ElfW(Sym) *symtab = (ElfW(Sym) *)(our_base + shdr[i].sh_offset);
+            int num_syms = shdr[i].sh_size / shdr[i].sh_entsize;
+
+            for (int j = 0; j < num_syms; j++) {
+                const char *name = shstrtab + symtab[j].st_name;
+                if (strstr(name, "g_dpt_rc4_key") || strstr(name, "rc4_key")) {
+                    /* Found the key symbol — read the key from its location */
+                    uint8_t *key_addr = (uint8_t *)(our_base + symtab[j].st_value);
+                    memcpy(rc4_key, key_addr, 16);
+                    key_found = 1;
+                    break;
+                }
+            }
+            if (key_found) break;
+        }
+    }
+
+    if (!key_found) return;
+
+    /* Decrypt encrypted sections */
+    for (int i = 0; i < ehdr->e_shnum; i++) {
+        const char *name = shstrtab + shdr[i].sh_name;
+
+        if ((strcmp(name, ".bitcode") == 0 || strcmp(name, ".rodata") == 0) &&
+            shdr[i].sh_flags & SHF_ALLOC &&
+            shdr[i].sh_flags & SHF_EXECINSTR &&
+            shdr[i].sh_size > 0) {
+
+            uint8_t *section_addr = (uint8_t *)(our_base + shdr[i].sh_addr);
+
+            /* Make section writable */
+            uintptr_t page_start = section_addr & ~(sysconf(_SC_PAGE_SIZE) - 1);
+            size_t page_size = sysconf(_SC_PAGE_SIZE);
+            size_t num_pages = (shdr[i].sh_size / page_size) + 2;
+
+            if (mprotect((void *)page_start, page_size * num_pages,
+                         PROT_READ | PROT_WRITE | PROT_EXEC) == 0) {
+                /* Decrypt in-place */
+                rc4_inplace(rc4_key, 16, section_addr, shdr[i].sh_size);
+
+                /* Restore permissions */
+                mprotect((void *)page_start, page_size * num_pages,
+                         PROT_READ | PROT_EXEC);
+            }
+        }
+    }
+}
 
 /**
  * Read a 4-byte big-endian integer from the payload.
@@ -212,6 +335,10 @@ Java_com_fuckprotect_shell_ShellApplication_nativeInitWithContext(
     /* ─── Step 7: Create child monitor process ─────────────────────── */
     protect_process();
     LOGD("nativeInit: child process protection started");
+
+    /* ─── Step 8: Decrypt native library sections ──────────────────── */
+    decrypt_so_sections();
+    LOGD("nativeInit: native library sections decrypted");
 
     LOGD("nativeInit: all initialization checks passed");
 }

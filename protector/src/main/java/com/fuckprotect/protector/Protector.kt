@@ -7,9 +7,11 @@ import com.fuckprotect.protector.apk.ApkParser
 import com.fuckprotect.protector.apk.ApkSigner
 import com.fuckprotect.protector.apk.ManifestEditor
 import com.fuckprotect.protector.dex.DexEncryptor
+import com.fuckprotect.protector.dex.JunkCodeGenerator
 import com.fuckprotect.protector.dex.KeyDerivation
 import com.fuckprotect.protector.dex.PayloadBuilder
 import com.fuckprotect.protector.embedder.SignatureEmbedder
+import com.fuckprotect.protector.native.SoFileEncryptor
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
@@ -194,9 +196,31 @@ class Protector : Callable<Int> {
             if (nativeLibDir.exists()) {
                 embedder.embedAll(nativeLibDir, certHash)
                 log("  Certificate hash embedded into libshell.so")
+
+                // Phase 4c: Encrypt native library sections with RC4
+                log("Phase 4c: Encrypting native library sections...")
+                val soEncryptor = SoFileEncryptor()
+                val rc4Key = ByteArray(SoFileEncryptor.RC4_KEY_SIZE) {
+                    (it * 0x37 and 0xFF).toByte()
+                }
+                soEncryptor.encryptAllNativeLibs(nativeLibDir, rc4Key)
+                log("  Native library sections encrypted with RC4")
             } else {
                 log("  WARNING: No native libs in APK — signature embedding skipped")
             }
+
+            // Phase 4d: Generate junk code DEX
+            log("Phase 4d: Generating junk code DEX...")
+            val junkGen = JunkCodeGenerator()
+            val junkDex = junkGen.generateDex()
+            val junkDexFile = File(tempWork, "classes.dex").apply {
+                // If classes.dex already exists, rename it first
+                if (exists()) {
+                    renameTo(File(tempWork, "classes_orig.dex"))
+                }
+            }
+            junkDexFile.writeBytes(junkDex)
+            log("  Junk code DEX generated: ${junkDex.size} bytes")
 
             // Phase 5: Repackage APK
             log("Phase 5: Repackaging...")
