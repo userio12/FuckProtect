@@ -141,26 +141,22 @@ class ApkParser {
 
     /**
      * Minimal AXML parser that extracts string pool and finds attributes.
-     *
-     * AXML format:
-     * - Header: "AXML\x00\x00\x00\x00" + size
-     * - String pool: chunk header + string count + strings
-     * - Resource IDs
-     * - XML tree: StartTag, EndTag, Text, etc.
-     *
-     * This parser extracts the string pool then scans for android:name attributes
-     * inside <application> tags.
      */
     private fun parseApplicationClassFromAxml(bytes: ByteArray): String? {
         try {
             val strings = extractStringPool(bytes)
             if (strings.isEmpty()) return null
 
-            // Scan for application tag and android:name attribute
-            // AXML chunk type: StartTag = 0x00100102
-            // android:name resource ID = 0x01010003
-            var inApplication = false
-            var i = 0
+            // Find "application" string index
+            val appStrIdx = strings.indexOfFirst { it == "application" }
+            if (appStrIdx < 0) return null
+
+            // Find "name" string index
+            val nameStrIdx = strings.indexOfFirst { it == "name" }
+            if (nameStrIdx < 0) return null
+
+            // Scan XML tree for <application> start tag with name attribute
+            var i = 8
             while (i < bytes.size - 8) {
                 val chunkType = readInt32(bytes, i)
                 val chunkSize = readInt32(bytes, i + 4)
@@ -171,57 +167,90 @@ class ApkParser {
 
                 if (chunkType == 0x00100102) {
                     // Start element tag
-                    // +8: lineNumber, +12: comment string index (skip)
-                    // +16: namespace URI index, +20: name index
-                    val nameIdx = readInt32(bytes, i + 20)
-                    if (nameIdx >= 0 && nameIdx < strings.size &&
-                        strings[nameIdx] == "application") {
-                        inApplication = true
-                    }
-
-                    // Parse attributes: +24: attribute start, +26: attribute size,
-                    // +28: attribute count
-                    if (i + 28 < bytes.size) {
+                    val elemNameIdx = readInt32(bytes, i + 20)
+                    if (elemNameIdx == appStrIdx) {
+                        // Found <application> tag - look for "name" attribute
                         val attrCount = readInt32(bytes, i + 28)
-                        val attrStart = i + 36 // +28 + 8 (attributeStart + attributeSize)
+                        val attrStart = i + 36
                         for (a in 0 until attrCount) {
                             val off = attrStart + a * 20
                             if (off + 20 > i + chunkSize) break
-                            val nsIdx = readInt32(bytes, off)      // namespace
-                            val nameIdx2 = readInt32(bytes, off + 4) // name
-                            val rawType = readInt32(bytes, off + 8) // rawValue
-                            val typedVal = readInt32(bytes, off + 16) // typedData
-
-                            // android namespace = 0x01010000 range
-                            // android:name = 0x01010003
-                            if (nsIdx == 0 && nameIdx2 == 3) { // android:name (resource ID 0x01010003)
-                                // rawValue or data is the string index
-                                val strIdx = if (rawType != -1) rawType else typedVal
+                            val attrNameIdx = readInt32(bytes, off + 4)
+                            if (attrNameIdx == nameStrIdx) {
+                                val rawValue = readInt32(bytes, off + 8)
+                                val dataVal = readInt32(bytes, off + 16)
+                                val strIdx = if (rawValue != -1) rawValue else dataVal
                                 if (strIdx >= 0 && strIdx < strings.size) {
-                                    if (inApplication) {
-                                        return strings[strIdx]
-                                    }
+                                    return strings[strIdx]
                                 }
                             }
                         }
-                    }
-                } else if (chunkType == 0x00100103) {
-                    // End element tag
-                    if (inApplication) {
-                        val nameIdx = readInt32(bytes, i + 20)
-                        if (nameIdx >= 0 && nameIdx < strings.size &&
-                            strings[nameIdx] == "application") {
-                            inApplication = false
-                        }
+                        // No name attribute found - app uses default Application
+                        // Find the main Activity class and use its package + default Application
+                        return findDefaultApplicationFromAxml(bytes, strings)
                     }
                 }
 
                 i += chunkSize
             }
         } catch (_: Exception) {
-            // Fall through
         }
         return null
+    }
+
+    /**
+     * When no custom Application is declared, find the main Activity's package
+     * and return "android.app.Application" as the default.
+     */
+    private fun findDefaultApplicationFromAxml(
+        bytes: ByteArray,
+        strings: List<String>,
+    ): String? {
+        // Find "activity" string index
+        val activityStrIdx = strings.indexOfFirst { it == "activity" }
+        if (activityStrIdx < 0) return "android.app.Application"
+
+        // Find main activity class (the one with LAUNCHER intent filter)
+        var i = 8
+        while (i < bytes.size - 8) {
+            val chunkType = readInt32(bytes, i)
+            val chunkSize = readInt32(bytes, i + 4)
+            if (chunkSize <= 0 || i + chunkSize > bytes.size) {
+                i += 4
+                continue
+            }
+            if (chunkType == 0x00100102) {
+                val elemNameIdx = readInt32(bytes, i + 20)
+                if (elemNameIdx == activityStrIdx) {
+                    // Found <activity> - look for name attribute
+                    val attrCount = readInt32(bytes, i + 28)
+                    val attrStart = i + 36
+                    for (a in 0 until attrCount) {
+                        val off = attrStart + a * 20
+                        if (off + 20 > i + chunkSize) break
+                        val attrNameIdx = readInt32(bytes, off + 4)
+                        val nameStrIdx = strings.indexOfFirst { it == "name" }
+                        if (attrNameIdx == nameStrIdx) {
+                            val rawValue = readInt32(bytes, off + 8)
+                            val dataVal = readInt32(bytes, off + 16)
+                            val strIdx = if (rawValue != -1) rawValue else dataVal
+                            if (strIdx >= 0 && strIdx < strings.size) {
+                                val activityClass = strings[strIdx]
+                                // Extract package from activity class
+                                val pkg = activityClass.substringBeforeLast(".", "")
+                                return if (activityClass.startsWith(".")) {
+                                    "$pkg$activityClass"
+                                } else {
+                                    activityClass
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            i += chunkSize
+        }
+        return "android.app.Application"
     }
 
     private fun parsePackageNameFromAxml(bytes: ByteArray): String {
@@ -229,14 +258,9 @@ class ApkParser {
             val strings = extractStringPool(bytes)
             if (strings.isEmpty()) return ""
 
-            // Package name is usually in the manifest's package attribute
-            // Resource ID for package = 0x01010000 (android:package in <manifest>)
-            // But actually the package is at a different location in AXML
-            // For simplicity, try to find strings that look like package names
             for (s in strings) {
                 if (s.contains(".") && s.all { it.isLetterOrDigit() || it == '.' || it == '_' } &&
                     s.length > 3 && s[0].isLetter()) {
-                    // Heuristic: first plausible package-like string
                     if (s.startsWith("com.") || s.startsWith("org.") ||
                         s.startsWith("net.") || s.startsWith("io.")) {
                         return s
@@ -244,7 +268,6 @@ class ApkParser {
                 }
             }
         } catch (_: Exception) {
-            // Fall through
         }
         return ""
     }
