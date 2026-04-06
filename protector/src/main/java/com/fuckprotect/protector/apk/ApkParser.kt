@@ -124,16 +124,16 @@ class ApkParser {
     /**
      * Parse the Application class name from AndroidManifest.xml.
      *
-     * Handles binary AXML format, compressed manifest, and plain XML.
+     * Handles binary AXML format (with or without AXML magic prefix),
+     * zlib-compressed manifest, and plain XML.
      */
     fun parseApplicationClass(extracted: ExtractedApk): String? {
         val manifest = extracted.manifest ?: return null
         var bytes = manifest.readBytes()
         System.err.println("DEBUG: Manifest size: ${bytes.size} bytes")
-        System.err.println("DEBUG: First 8 bytes: ${bytes.take(8).joinToString(" ") { "%02x".format(it) }}")
+        System.err.println("DEBUG: First 16 bytes: ${bytes.take(16).joinToString(" ") { "%02x".format(it) }}")
 
         // Try to decompress if it looks like zlib/deflate compressed AXML
-        // zlib header: 78 9C (default compression) or 78 01 (low compression)
         if (bytes.size >= 2 && bytes[0] == 0x78.toByte() &&
             (bytes[1] == 0x9C.toByte() || bytes[1] == 0x01.toByte() || bytes[1] == 0xDA.toByte())) {
             try {
@@ -145,20 +145,32 @@ class ApkParser {
             }
         }
 
-        // Check if it's binary AXML (starts with AXML\x00\x00\x00\x00)
-        val isAxml = bytes.size >= 8 &&
+        // Check if it's binary AXML format:
+        // 1. Starts with "AXML\x00\x00\x00\x00" magic
+        // 2. Starts with RES_XML_TYPE header (0x0003 little-endian)
+        val hasAxmlMagic = bytes.size >= 8 &&
             bytes[0] == 0x41.toByte() && bytes[1] == 0x58.toByte() &&
             bytes[2] == 0x4D.toByte() && bytes[3] == 0x4C.toByte()
-        System.err.println("DEBUG: Is AXML: $isAxml")
+        val hasXmlHeader = bytes.size >= 8 &&
+            bytes[0] == 0x03.toByte() && bytes[1] == 0x00.toByte() && // RES_XML_TYPE
+            bytes[2] == 0x08.toByte() && bytes[3] == 0x00.toByte()     // headerSize = 8
+        val isAxml = hasAxmlMagic || hasXmlHeader
+
+        System.err.println("DEBUG: Has AXML magic: $hasAxmlMagic, Has XML header: $hasXmlHeader, Is AXML: $isAxml")
 
         if (isAxml) {
+            // If it has the AXML magic prefix, strip it to get the ResChunk header
+            if (hasAxmlMagic && bytes.size > 8) {
+                bytes = bytes.copyOfRange(8, bytes.size)
+                System.err.println("DEBUG: Stripped AXML magic, remaining: ${bytes.size} bytes")
+            }
             return parseApplicationClassFromAxml(bytes)
         }
 
-        // Try to decode as UTF-8 or UTF-16 text
+        // Try to decode as text
         val xmlText = tryDecodeAsText(bytes)
         System.err.println("DEBUG: Decoded text length: ${xmlText.length}")
-        System.err.println("DEBUG: First 100 chars: ${xmlText.take(100)}")
+        System.err.println("DEBUG: First 100 chars: ${xmlText.take(100).map { if (it.isISOControl()) '?' else it }.joinToString("")}")
 
         return parseApplicationClassFromXml(xmlText)
     }
