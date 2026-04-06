@@ -127,6 +127,10 @@ class DexParser {
      * Parse a DEX file from a byte array.
      */
     fun parse(bytes: ByteArray): DexFile {
+        require(bytes.size > DexHeader.SIZE) {
+            "File too small to be a valid DEX: ${bytes.size} bytes"
+        }
+
         val buffer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
 
         val header = parseHeader(buffer)
