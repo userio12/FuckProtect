@@ -1,30 +1,25 @@
 package com.fuckprotect.protector.builder
 
 import com.fuckprotect.protector.res.ManifestEditor
-import com.fuckprotect.protector.util.ApkSigner
+import com.fuckprotect.protector.util.FileUtils
+import com.fuckprotect.protector.util.LogUtils
+import com.fuckprotect.protector.util.ZipUtils
 import net.lingala.zip4j.ZipFile
 import java.io.File
 
 /**
  * Represents an Android APK being protected.
- *
- * Matches dpt-shell's builder.Apk pattern:
- * - Extract APK to working directory
- * - Parse manifest for application name
- * - Hollow methods
- * - Repackage and sign
+ * Matches dpt-shell's builder.Apk pattern.
  */
 class Apk private constructor(private val builder: Builder) {
 
     val filePath: String = builder.filePath
-    val outputPath: String? = builder.outputPath
-    val shouldSign: Boolean = builder.sign
-    val debuggable: Boolean = builder.debuggable
-    val verifySign: Boolean = builder.verifySign
+    val workspaceDir: File = builder.workspaceDir ?: createTempDir("fp_apk_")
+    var sign: Boolean = builder.sign
+    var verifySign: Boolean = builder.verifySign
 
-    private var workDir: File? = null
     var dexFiles: List<File> = emptyList()
-    var originalApplication: String = ""
+    var applicationName: String = ""
     var packageName: String = ""
     var manifestFile: File? = null
     var primaryDex: File? = null
@@ -32,32 +27,31 @@ class Apk private constructor(private val builder: Builder) {
     /**
      * Extract APK to working directory and parse manifest.
      */
-    fun extract(): Apk {
-        workDir = builder.workspaceDir ?: createTempDir("fp_apk_")
+    fun extract() {
+        LogUtils.debug("Extracting APK: %s", filePath)
 
-        // Extract APK
+        // Extract APK (except manifest)
         ZipFile(filePath).use { zip ->
             zip.fileHeaders.forEach { header ->
                 if (header.fileName != "AndroidManifest.xml") {
-                    zip.extractFile(header, workDir!!.absolutePath)
+                    zip.extractFile(header, workspaceDir.absolutePath)
                 }
             }
         }
 
         // Read manifest directly from APK
-        val manifestFile = File(workDir!!, "AndroidManifest.xml")
+        manifestFile = File(workspaceDir, "AndroidManifest.xml")
         ZipFile(filePath).use { zip ->
             val header = zip.fileHeaders.find { it.fileName == "AndroidManifest.xml" }
             if (header != null) {
                 zip.getInputStream(header).use { input ->
-                    manifestFile.writeBytes(input.readBytes())
+                    manifestFile!!.writeBytes(input.readBytes())
                 }
             }
         }
-        this.manifestFile = manifestFile
 
         // Discover DEX files
-        dexFiles = workDir!!.listFiles { f ->
+        dexFiles = workspaceDir.listFiles { f ->
             f.name.endsWith(".dex")
         }?.toList()?.sortedWith(
             compareBy { f ->
@@ -71,7 +65,7 @@ class Apk private constructor(private val builder: Builder) {
         // Parse manifest
         parseManifest()
 
-        return this
+        LogUtils.info("Extracted APK: %s", workspaceDir.absolutePath)
     }
 
     /**
@@ -79,84 +73,71 @@ class Apk private constructor(private val builder: Builder) {
      */
     private fun parseManifest() {
         val manifest = manifestFile ?: return
-        val bytes = manifest.readBytes()
+        val xml = manifest.readText()
 
-        // Check for AXML format
-        if (bytes.size >= 8 &&
-            bytes[0] == 0x03.toByte() && bytes[1] == 0x00.toByte() &&
-            bytes[2] == 0x08.toByte() && bytes[3] == 0x00.toByte()) {
-            // Binary AXML - parse with our AXML parser
-            val parser = AxmlParser(bytes)
-            originalApplication = parser.getApplicationName()
-            packageName = parser.getPackageName()
-        } else if (bytes.size >= 8 &&
-            bytes[0] == 0x41.toByte() && bytes[1] == 0x58.toByte()) {
-            // AXML with magic prefix
-            val parser = AxmlParser(bytes.copyOfRange(8, bytes.size))
-            originalApplication = parser.getApplicationName()
-            packageName = parser.getPackageName()
-        } else {
-            // Plain XML
-            val xml = bytes.decodeToString()
-            val appMatch = Regex("""android:name\s*=\s*"([^"]+)"""", RegexOption.IGNORE_CASE)
-                .findAll(xml).firstOrNull {
-                    xml.indexOf("<application", it.range.first, ignoreCase = true) < it.range.first
-                }
-            originalApplication = appMatch?.groupValues?.get(1) ?: ""
-            val pkgMatch = Regex("""package\s*=\s*"([^"]+)"""", RegexOption.IGNORE_CASE).find(xml)
-            packageName = pkgMatch?.groupValues?.get(1) ?: ""
+        // Simple regex-based parsing
+        val appMatch = Regex("""android:name\s*=\s*"([^"]+)"""", RegexOption.IGNORE_CASE)
+            .findAll(xml)
+            .firstOrNull { match ->
+                val beforeMatch = xml.substring(0, match.range.first)
+                beforeMatch.contains("<application", ignoreCase = true)
+            }
+        applicationName = appMatch?.groupValues?.get(1) ?: ""
+
+        val pkgMatch = Regex("""package\s*=\s*"([^"]+)"""", RegexOption.IGNORE_CASE).find(xml)
+        packageName = pkgMatch?.groupValues?.get(1) ?: ""
+
+        if (applicationName.startsWith(".")) {
+            applicationName = packageName + applicationName
         }
 
-        if (originalApplication.startsWith(".")) {
-            originalApplication = packageName + originalApplication
-        }
+        LogUtils.debug("Application: %s, Package: %s", applicationName, packageName)
     }
 
     /**
-     * Hijack the manifest to replace Application class.
+     * Hijack the manifest to replace Application class with shell.
      */
     fun hijackManifest() {
         val manifest = manifestFile ?: return
-        val xml = manifest.readText()
-        val modified = ManifestEditor.hijackApplication(xml, originalApplication)
-        manifest.writeText(modified)
+        ManifestEditor.hijackApplicationInPlace(manifest, applicationName)
+        LogUtils.info("Manifest hijacked: %s -> ShellApplication", applicationName)
     }
 
     /**
-     * Repackage the APK.
+     * Build the protected APK.
      */
-    fun repackage(outputFile: File) {
-        ZipFile(outputFile).use { zip ->
-            workDir!!.listFiles()?.forEach { file ->
+    fun buildPackage(originPackagePath: String, unpackFilePath: String, savePath: String) {
+        LogUtils.info("Building protected package...")
+        val outputDir = File(savePath)
+        val resultFile = File(outputDir, "unsigned.apk")
+
+        // Zip everything from unpacked directory
+        ZipFile(resultFile).use { zip ->
+            workspaceDir.listFiles()?.forEach { file ->
                 if (file.isFile) {
                     zip.addFile(file)
                 } else if (file.isDirectory) {
-                    addDirectoryToZip(zip, file, file.name)
+                    addDirectory(zip, file, file.name)
                 }
             }
         }
+
+        LogUtils.info("Package built: %s", resultFile.absolutePath)
     }
 
     /**
      * Sign the APK.
      */
-    fun sign(keystoreFile: File, storePass: String, keyAlias: String, keyPass: String) {
-        val signer = ApkSigner()
-        val tempFile = File.createTempFile("fp_unsigned", ".apk")
-        outputFile.copyTo(tempFile, overwrite = true)
-        signer.signApkJar(
-            tempFile, outputFile,
-            ApkSigner.KeystoreConfig(keystoreFile, storePass, keyAlias, keyPass)
-        )
-        tempFile.delete()
+    fun sign(keystoreFile: File, storePass: String, keyAlias: String, keyPass: String, outputFile: File) {
+        // Signing is done by the caller via ApkSigner
     }
 
-    private fun addDirectoryToZip(zip: ZipFile, dir: File, basePath: String) {
+    private fun addDirectory(zip: ZipFile, dir: File, basePath: String) {
         dir.listFiles()?.forEach { file ->
             if (file.isFile) {
                 zip.addFile(file)
             } else {
-                addDirectoryToZip(zip, file, "$basePath/${file.name}")
+                addDirectory(zip, file, "$basePath/${file.name}")
             }
         }
     }
@@ -170,17 +151,13 @@ class Apk private constructor(private val builder: Builder) {
      */
     class Builder {
         var filePath: String = ""
-        var outputPath: String? = null
         var workspaceDir: File? = null
         var sign: Boolean = true
-        var debuggable: Boolean = false
         var verifySign: Boolean = false
 
         fun filePath(path: String) = apply { this.filePath = path }
-        fun outputPath(path: String?) = apply { this.outputPath = path }
         fun workspaceDir(dir: File?) = apply { this.workspaceDir = dir }
         fun sign(sign: Boolean) = apply { this.sign = sign }
-        fun debuggable(debuggable: Boolean) = apply { this.debuggable = debuggable }
         fun verifySign(verify: Boolean) = apply { this.verifySign = verify }
 
         fun build() = Apk(this)

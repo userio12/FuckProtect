@@ -1,15 +1,14 @@
 package com.fuckprotect.protector
 
 import com.fuckprotect.protector.builder.Apk
+import com.fuckprotect.protector.config.ShellConfig
 import com.fuckprotect.protector.dex.DexEncryptor
-import com.fuckprotect.protector.dex.JunkCodeGenerator
 import com.fuckprotect.protector.dex.KeyDerivation
-import com.fuckprotect.protector.dex.PayloadBuilder
-import com.fuckprotect.protector.dex.hollow.DexMethodHollower
 import com.fuckprotect.protector.res.ManifestEditor
+import com.fuckprotect.protector.task.ThreadPool
 import com.fuckprotect.protector.util.ApkSigner
+import com.fuckprotect.protector.util.LogUtils
 import com.fuckprotect.protector.util.SignatureEmbedder
-import com.fuckprotect.protector.util.SoFileEncryptor
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
@@ -48,80 +47,102 @@ class Protector : Callable<Int> {
     @Option(names = ["-v", "--verbose"], description = ["Verbose output"])
     private var verbose: Boolean = false
 
+    @Option(names = ["--verify-sign"], description = ["Enable signature verification"])
+    private var verifySign: Boolean = false
+
     override fun call(): Int {
         try {
             println("=== FuckProtect 1.0.0 ===\n")
 
             val tempWork = workDir ?: File.createTempFile("fp_work_", "").apply { delete(); mkdir() }
 
-            // Phase 1: Parse
-            log("Phase 1: Parsing input APK...")
-            val apk = Apk(inputApk, tempWork)
+            // Phase 1: Parse APK
+            LogUtils.setOpenNoisyLog(verbose)
+            LogUtils.info("Phase 1: Parsing input APK...")
+            val apk = Apk.Builder()
+                .filePath(inputApk.absolutePath)
+                .workspaceDir(tempWork)
+                .sign(true)
+                .verifySign(verifySign)
+                .build()
             apk.extract()
-            log("  DEX files: ${apk.dexFiles.size}")
-            log("  Application: ${apk.originalApplication}")
+            LogUtils.info("  DEX files: %d", apk.dexFiles.size)
+            LogUtils.info("  Application: %s", apk.applicationName)
 
-            // Phase 2: Hollow methods
-            log("Phase 2: Hollowing methods...")
-            val hollower = DexMethodHollower()
-            val hollowResult = hollower.hollowAllMethods(apk.primaryDex)
-            log("  Hollowed: ${hollowResult.methodCount} methods")
+            if (apk.applicationName.isNullOrEmpty()) {
+                System.err.println("ERROR: Could not determine original Application class")
+                return 1
+            }
 
-            // Phase 3: Encrypt DEX
-            log("Phase 3: Encrypting DEX...")
+            // Phase 2: Encrypt DEX
+            LogUtils.info("Phase 2: Encrypting DEX files...")
             val signer = ApkSigner()
             val certHash = signer.getCertificateHash(
                 ApkSigner.KeystoreConfig(keystoreFile, storePass, keyAlias, keyPass)
             )
             val aesKey = KeyDerivation.deriveFromCertBytes(certHash)
-            val encrypted = DexEncryptor.encrypt(apk.primaryDex.readBytes(), aesKey)
-            log("  Encrypted: ${apk.primaryDex.length()} -> ${encrypted.size} bytes")
 
-            // Phase 4: Build payload
-            log("Phase 4: Building payload...")
-            val payload = PayloadBuilder()
-                .setAppClass(apk.originalApplication)
-                .setEncryptedDex(encrypted)
-                .enableSignatureVerification()
-                .build()
-            File(tempWork, "assets/fp_payload.dat").apply {
-                parentFile?.mkdirs()
-                writeBytes(payload)
+            val primaryDex = apk.primaryDex
+            if (primaryDex == null || !primaryDex.exists()) {
+                System.err.println("ERROR: No DEX files found")
+                return 1
             }
 
-            // Phase 5: Modify manifest
-            log("Phase 5: Modifying manifest...")
-            ManifestEditor.hijackApplication(apk.manifestFile!!, apk.originalApplication)
+            val dexBytes = primaryDex.readBytes()
+            val encrypted = DexEncryptor.encrypt(dexBytes, aesKey)
+            LogUtils.info("  Encrypted: %d -> %d bytes", dexBytes.size, encrypted.size)
 
-            // Phase 6: Embed cert hash
-            log("Phase 6: Embedding certificate hash...")
+            // Phase 3: Build payload and write to assets
+            LogUtils.info("Phase 3: Building payload...")
+            val payloadDir = File(tempWork, "assets").apply { mkdirs() }
+            val payloadFile = File(payloadDir, "fp_payload.dat")
+            payloadFile.writeBytes(encrypted)
+
+            // Phase 4: Hijack manifest
+            LogUtils.info("Phase 4: Modifying manifest...")
+            val manifestFile = apk.manifestFile
+            if (manifestFile != null) {
+                ManifestEditor.hijackApplicationInPlace(manifestFile, apk.applicationName)
+                LogUtils.info("  Manifest hijacked")
+            }
+
+            // Phase 5: Embed cert hash into native libs
+            LogUtils.info("Phase 5: Embedding certificate hash...")
             val nativeLibDir = File(tempWork, "lib")
             if (nativeLibDir.exists()) {
                 SignatureEmbedder().embedAll(nativeLibDir, certHash)
-                SoFileEncryptor().encryptAll(nativeLibDir, certHash.copyOfRange(0, 16))
+                LogUtils.info("  Certificate hash embedded")
             }
 
-            // Phase 7: Repackage
-            log("Phase 7: Repackaging...")
-            apk.repackage(outputApk)
+            // Phase 6: Repackage
+            LogUtils.info("Phase 6: Repackaging...")
+            apk.buildPackage(inputApk.absolutePath, tempWork.absolutePath, tempWork.absolutePath)
 
-            // Phase 8: Sign
-            log("Phase 8: Signing...")
-            signer.signApk(outputApk, ApkSigner.KeystoreConfig(keystoreFile, storePass, keyAlias, keyPass))
+            // Phase 7: Sign
+            LogUtils.info("Phase 7: Signing...")
+            val unsignedApk = File(tempWork, "unsigned.apk")
+            if (unsignedApk.exists()) {
+                signer.signApkJar(
+                    unsignedApk, outputApk,
+                    ApkSigner.KeystoreConfig(keystoreFile, storePass, keyAlias, keyPass)
+                )
+            }
 
-            if (workDir == null) tempWork.deleteRecursively()
+            if (workDir == null) {
+                Thread.sleep(1000) // Give filesystem time to settle
+                tempWork.deleteRecursively()
+            }
 
             println("\n=== Protection complete ===")
             println("  Output: ${outputApk.absolutePath}")
             return 0
+
         } catch (e: Exception) {
             System.err.println("ERROR: ${e.message}")
             if (verbose) e.printStackTrace(System.err)
             return 1
         }
     }
-
-    private fun log(msg: String) { if (verbose) println(msg) }
 
     companion object {
         @JvmStatic fun main(args: Array<String>) {

@@ -195,3 +195,16 @@ class ManifestEditor {
         val isValid: Boolean,
     )
 }
+
+    companion object {
+        @JvmStatic
+        fun hijackApplicationInPlace(manifestFile: File, originalAppClass: String) {
+            ManifestEditor().hijackApplicationInPlace(manifestFile, originalAppClass)
+        }
+
+        @JvmStatic
+        fun hijackApplication(manifestXml: String, originalAppClass: String): String {
+            return ManifestEditor().hijackApplication(manifestXml, originalAppClass)
+        }
+    }
+}
