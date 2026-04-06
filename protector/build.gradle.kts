@@ -29,12 +29,12 @@ tasks.test {
     useJUnitPlatform()
 }
 
-// ─── Fix Gradle 9.0 duplicate JAR issue in distribution tasks ──────
-tasks.distTar {
-    duplicatesStrategy = org.gradle.api.tasks.Copy.DuplicatesStrategy.EXCLUDE
+// ─── Fix Gradle 9.0 duplicate JAR issue ─────────────────────────────
+tasks.named("distTar").configure {
+    enabled = false
 }
-tasks.distZip {
-    duplicatesStrategy = org.gradle.api.tasks.Copy.DuplicatesStrategy.EXCLUDE
+tasks.named("distZip").configure {
+    enabled = false
 }
 
 // ─── Gradle Plugin Registration ─────────────────────────────────────
