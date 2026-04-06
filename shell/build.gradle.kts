@@ -10,6 +10,7 @@ android {
     defaultConfig {
         minSdk = 21
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        resValue("string", "fp_version", "1.0.2")
 
         externalNativeBuild {
             cmake {
