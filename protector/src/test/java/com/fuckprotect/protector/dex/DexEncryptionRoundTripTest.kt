@@ -74,7 +74,7 @@ class DexEncryptionRoundTripTest {
         val dis = DataInputStream(bais)
         val header = PayloadFormat.readHeader(dis)
 
-        assertEquals(Constants.MAGIC.copyOf(), header.magic)
+        assertArrayEquals(Constants.MAGIC, header.magic)
         assertEquals(appClassName.length, header.originalAppClassNameLength)
         assertEquals(encrypted.data.size, header.encryptedDexLength)
 

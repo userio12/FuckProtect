@@ -94,10 +94,12 @@ class ManifestEditorTest {
 
     @Test
     fun `parseApplicationClassFromXml extracts class name`() {
-        val xml = """<manifest package="com.example">
-            <application android:name="com.example.MyApplication" android:label="App">
-            </application>
-        </manifest>"""
+        val xml = """<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.example" xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:name="com.example.MyApplication" android:label="@string/app_name">
+        <activity android:name=".MainActivity"/>
+    </application>
+</manifest>"""
 
         val className = editor.parseApplicationClassFromXml(xml)
         assertEquals("com.example.MyApplication", className)

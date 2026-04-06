@@ -104,15 +104,21 @@ class ManifestEditor {
      * Extract the android:name value from the <application> tag.
      */
     fun parseApplicationClassFromXml(xml: String): String? {
-        val regex = Regex("""android:name\s*=\s*"([^"]+)""", RegexOption.IGNORE_CASE)
-        val matches = regex.findAll(xml).toList()
-        // Find the first one inside an <application> tag
+        val nameRegex = Regex("""android:name\s*=\s*"([^"]+)""", RegexOption.IGNORE_CASE)
         val appRegex = Regex("""<application[^>]*>""", RegexOption.IGNORE_CASE)
         val appMatches = appRegex.findAll(xml).toList()
         if (appMatches.isEmpty()) return null
 
+        // First try to find android:name INSIDE the opening <application> tag
+        val appTag = appMatches.first().value
+        val nameInTag = nameRegex.find(appTag)
+        if (nameInTag != null) {
+            return nameInTag.groupValues[1]
+        }
+
+        // Otherwise look for android:name after the opening tag
         val appStart = appMatches.first().range.last
-        val nameMatch = regex.findAll(xml).firstOrNull { it.range.first > appStart }
+        val nameMatch = nameRegex.findAll(xml).firstOrNull { it.range.first > appStart }
         return nameMatch?.groupValues?.get(1)
     }
 
