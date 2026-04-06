@@ -142,11 +142,12 @@ class DexParserTest {
         buf.putInt(fileSize)
         buf.putInt(0x70)
         buf.putInt(0x12345678)
-        // Zeros until method IDs
-        repeat(14) { buf.putInt(0) }
+        // 11 zeros (linkSize through fieldIdsOff)
+        repeat(11) { buf.putInt(0) }
         buf.putInt(count) // methodIdsSize
         buf.putInt(methodIdsOff) // methodIdsOff
-        repeat(4) { buf.putInt(0) } // class defs + data
+        // 4 zeros (classDefsSize through dataOff)
+        repeat(4) { buf.putInt(0) }
 
         // Pad to methodIdsOff
         buf.position(methodIdsOff)
@@ -179,11 +180,12 @@ class DexParserTest {
         buf.putInt(fileSize)
         buf.putInt(0x70)
         buf.putInt(0x12345678)
-        // Zeros
-        repeat(14) { buf.putInt(0) }
+        // 13 zeros (linkSize through methodIdsOff)
+        repeat(13) { buf.putInt(0) }
         buf.putInt(count) // classDefsSize
         buf.putInt(classDefsOff) // classDefsOff
-        repeat(2) { buf.putInt(0) } // data
+        // 2 zeros (dataSize, dataOff)
+        repeat(2) { buf.putInt(0) }
 
         // Pad to classDefsOff
         buf.position(classDefsOff)
