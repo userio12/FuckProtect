@@ -99,8 +99,9 @@ class DexEncryptionRoundTripTest {
 
         val encrypted = encryptor.encrypt(data, key)
 
+        // Payload = IV (16) + ciphertext (PKCS7 pads 4→16) = 32
         assertTrue(encrypted.data.size > Constants.IV_SIZE_BYTES)
-        assertEquals(Constants.IV_SIZE_BYTES + data.size + 16, encrypted.data.size)
+        assertEquals(Constants.IV_SIZE_BYTES + 16, encrypted.data.size)
     }
 
     @Test

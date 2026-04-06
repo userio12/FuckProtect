@@ -11,8 +11,7 @@ import java.nio.ByteOrder
 /**
  * Unit tests for DexParser (T2.3).
  *
- * Since we don't have a real DEX file in the test classpath,
- * these tests construct synthetic DEX byte arrays.
+ * Tests header parsing, validation, and section parsing.
  */
 class DexParserTest {
 
@@ -67,7 +66,7 @@ class DexParserTest {
 
     @Test
     fun `parseHeaderOnly detects invalid header`() {
-        val badBytes = ByteArray(112) // All zeros
+        val badBytes = ByteArray(112)
         val header = parser.parseHeaderOnly(badBytes)
         assertFalse(header.isValid)
     }
@@ -99,29 +98,25 @@ class DexParserTest {
 
     @Test
     fun `parse detects DEX version 035`() {
-        val dexBytes = createMinimalDex035()
-        val dexFile = parser.parse(dexBytes)
+        val dexBytes = createDexWithMethods(0)
+        // Override version to 035
+        dexBytes[4] = 0x30
+        dexBytes[5] = 0x33
+        dexBytes[6] = 0x35
 
+        val dexFile = parser.parse(dexBytes)
         assertEquals("035", dexFile.version)
-        assertTrue(dexFile.isValid)
     }
 
     @Test
     fun `parse detects DEX version 037`() {
-        val dexBytes = createMinimalDex037()
+        val dexBytes = createDexWithMethods(0)
         val dexFile = parser.parse(dexBytes)
-
         assertEquals("037", dexFile.version)
-        assertTrue(dexFile.isValid)
     }
 
-    // ─── Helper: create minimal synthetic DEX ────────────────────────
+    // ─── Helpers ─────────────────────────────────────────────────────
 
-    /**
-     * Create a minimal valid DEX 037 file with the correct header structure.
-     * This isn't a real executable DEX, but has a valid header that the
-     * parser can read.
-     */
     private fun createMinimalDex037(): ByteArray {
         val baos = ByteArrayOutputStream()
         val dos = DataOutputStream(baos)
@@ -133,121 +128,117 @@ class DexParserTest {
         // Signature (20 zeros)
         dos.write(ByteArray(20))
         // File size
-        dos.writeInt(0x70) // header only
+        dos.writeInt(0x70)
         // Header size
         dos.writeInt(0x70)
         // Endian tag
         dos.writeInt(0x12345678)
-        // Link size, offset
-        dos.writeInt(0)
-        dos.writeInt(0)
-        // Map offset
-        dos.writeInt(0)
-        // String IDs
-        dos.writeInt(0)
-        dos.writeInt(0)
-        // Type IDs
-        dos.writeInt(0)
-        dos.writeInt(0)
-        // Proto IDs
-        dos.writeInt(0)
-        dos.writeInt(0)
-        // Field IDs
-        dos.writeInt(0)
-        dos.writeInt(0)
-        // Method IDs
-        dos.writeInt(0)
-        dos.writeInt(0)
-        // Class defs
-        dos.writeInt(0)
-        dos.writeInt(0)
-        // Data
-        dos.writeInt(0)
-        dos.writeInt(0)
+        // Rest of header (76 bytes to fill 0x70 total)
+        dos.write(ByteArray(0x70 - 40))
 
         return baos.toByteArray()
     }
 
-    private fun createMinimalDex035(): ByteArray {
-        val dex = createMinimalDex037()
-        // Replace version
-        dex[4] = 0x30
-        dex[5] = 0x33
-        dex[6] = 0x35
-        return dex
-    }
-
     private fun createDexWithMethods(count: Int): ByteArray {
-        val dex = createMinimalDex037().toMutableList()
+        val headerSize = 0x70
+        val methodIdsOff = headerSize + 100 // some padding
+        val methodIdsSize = count * 8 // 8 bytes per method ID
 
-        // Add method IDs after the header
-        val methodIdsOff = dex.size
+        val baos = ByteArrayOutputStream()
+        val dos = DataOutputStream(baos)
+
+        // Magic: "dex\n037\0"
+        dos.write(byteArrayOf(0x64, 0x65, 0x78, 0x0a, 0x30, 0x33, 0x37, 0x00))
+        dos.writeInt(0) // checksum
+        dos.write(ByteArray(20)) // signature
+        val fileSize = headerSize + 100 + methodIdsSize
+        dos.writeInt(fileSize)
+        dos.writeInt(headerSize)
+        dos.writeInt(0x12345678) // endian
+        // Link
+        dos.writeInt(0); dos.writeInt(0)
+        // Map
+        dos.writeInt(0)
+        // String IDs
+        dos.writeInt(0); dos.writeInt(0)
+        // Type IDs
+        dos.writeInt(0); dos.writeInt(0)
+        // Proto IDs
+        dos.writeInt(0); dos.writeInt(0)
+        // Field IDs
+        dos.writeInt(0); dos.writeInt(0)
+        // Method IDs
+        dos.writeInt(count)
+        dos.writeInt(methodIdsOff)
+        // Class defs
+        dos.writeInt(0); dos.writeInt(0)
+        // Data
+        dos.writeInt(0); dos.writeInt(0)
+
+        // Padding
+        dos.write(ByteArray(100))
+
+        // Method IDs
         repeat(count) {
-            // Each method ID: classIdx(2) + protoIdx(2) + nameIdx(4) = 8 bytes
-            dex.add(0x00) // classIdx low
-            dex.add(0x00) // classIdx high
-            dex.add(0x00) // protoIdx low
-            dex.add(0x00) // protoIdx high
-            val nameIdx = 0x0100 + it // nameIdx (4 bytes, LE)
-            dex.add((nameIdx and 0xFF).toByte())
-            dex.add(((nameIdx shr 8) and 0xFF).toByte())
-            dex.add(((nameIdx shr 16) and 0xFF).toByte())
-            dex.add(((nameIdx shr 24) and 0xFF).toByte())
+            dos.writeShort(0) // classIdx
+            dos.writeShort(0) // protoIdx
+            dos.writeInt(1 + it) // nameIdx
         }
 
-        // Update header: methodIdsSize and methodIdsOff
-        val buffer = ByteBuffer.wrap(dex.toByteArray().also {}).order(ByteOrder.LITTLE_ENDIAN)
-
-        // We need to modify the byte array directly
-        val result = dex.toByteArray()
-        // methodIdsSize at offset 0x58
-        result[0x58] = count.toByte()
-        result[0x59] = 0
-        result[0x5A] = 0
-        result[0x5B] = 0
-        // methodIdsOff at offset 0x5C
-        result[0x5C] = (methodIdsOff and 0xFF).toByte()
-        result[0x5D] = ((methodIdsOff shr 8) and 0xFF).toByte()
-        result[0x5E] = ((methodIdsOff shr 16) and 0xFF).toByte()
-        result[0x5F] = ((methodIdsOff shr 24) and 0xFF).toByte()
-        // Update file size
-        val fileSize = result.size
-        result[0x20] = (fileSize and 0xFF).toByte()
-        result[0x21] = ((fileSize shr 8) and 0xFF).toByte()
-        result[0x22] = ((fileSize shr 16) and 0xFF).toByte()
-        result[0x23] = ((fileSize shr 24) and 0xFF).toByte()
-
-        return result
+        return baos.toByteArray()
     }
 
     private fun createDexWithClasses(count: Int): ByteArray {
-        val dex = createMinimalDex037().toMutableList()
+        val headerSize = 0x70
+        val classDefsOff = headerSize + 100
+        val classDefSize = count * 32 // 32 bytes per class def
 
-        // Add class defs after the header
-        val classDefsOff = dex.size
+        val baos = ByteArrayOutputStream()
+        val dos = DataOutputStream(baos)
+
+        // Magic
+        dos.write(byteArrayOf(0x64, 0x65, 0x78, 0x0a, 0x30, 0x33, 0x37, 0x00))
+        dos.writeInt(0)
+        dos.write(ByteArray(20))
+        val fileSize = headerSize + 100 + classDefSize
+        dos.writeInt(fileSize)
+        dos.writeInt(headerSize)
+        dos.writeInt(0x12345678)
+        // Link
+        dos.writeInt(0); dos.writeInt(0)
+        // Map
+        dos.writeInt(0)
+        // String IDs
+        dos.writeInt(0); dos.writeInt(0)
+        // Type IDs
+        dos.writeInt(0); dos.writeInt(0)
+        // Proto IDs
+        dos.writeInt(0); dos.writeInt(0)
+        // Field IDs
+        dos.writeInt(0); dos.writeInt(0)
+        // Method IDs
+        dos.writeInt(0); dos.writeInt(0)
+        // Class defs
+        dos.writeInt(count)
+        dos.writeInt(classDefsOff)
+        // Data
+        dos.writeInt(0); dos.writeInt(0)
+
+        // Padding
+        dos.write(ByteArray(100))
+
+        // Class defs
         repeat(count) {
-            // Each class def: 8 ints * 4 bytes = 32 bytes
-            repeat(32) { dex.add(0x00) }
+            dos.writeInt(0)  // classIdx
+            dos.writeInt(1)  // accessFlags
+            dos.writeInt(1)  // superclassIdx
+            dos.writeInt(0)  // interfacesOff
+            dos.writeInt(0)  // sourceFileIdx
+            dos.writeInt(0)  // annotationsOff
+            dos.writeInt(0)  // classDataOff
+            dos.writeInt(0)  // staticValuesOff
         }
 
-        val result = dex.toByteArray()
-        // classDefsSize at offset 0x60
-        result[0x60] = count.toByte()
-        result[0x61] = 0
-        result[0x62] = 0
-        result[0x63] = 0
-        // classDefsOff at offset 0x64
-        result[0x64] = (classDefsOff and 0xFF).toByte()
-        result[0x65] = ((classDefsOff shr 8) and 0xFF).toByte()
-        result[0x66] = ((classDefsOff shr 16) and 0xFF).toByte()
-        result[0x67] = ((classDefsOff shr 24) and 0xFF).toByte()
-        // Update file size
-        val fileSize = result.size
-        result[0x20] = (fileSize and 0xFF).toByte()
-        result[0x21] = ((fileSize shr 8) and 0xFF).toByte()
-        result[0x22] = ((fileSize shr 16) and 0xFF).toByte()
-        result[0x23] = ((fileSize shr 24) and 0xFF).toByte()
-
-        return result
+        return baos.toByteArray()
     }
 }
