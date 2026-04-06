@@ -20,13 +20,8 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines)
 }
 
-// Exclude kotlin-stdlib from runtime to avoid duplicates in distributions
-configurations.all {
+configurations.runtimeClasspath {
     exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-}
-// But we still need it for compilation
-dependencies {
-    implementation(kotlin("stdlib"))
 }
 
 java {
@@ -41,6 +36,13 @@ tasks.test {
 // ─── Fix Gradle 9.0 duplicate JAR issue ─────────────────────────────
 tasks.withType<Sync>().configureEach {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// Fix duplicate kotlin-stdlib in distributions
+configurations {
+    runtimeClasspath {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+    }
 }
 
 // ─── Gradle Plugin Registration ─────────────────────────────────────
