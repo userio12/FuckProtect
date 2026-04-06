@@ -1,3 +1,4 @@
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #pragma once
 /**
  * Anti-hooking measures for FuckProtect shell.

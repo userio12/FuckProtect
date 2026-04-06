@@ -128,7 +128,7 @@ Java_com_fuckprotect_shell_ShellApplication_nativeInitWithContext(
         jmethodID availableId = env->GetMethodID(
             isClass, "available", "()I"
         );
-        jint available = env->CallIntMethod(inputStream, availableId);
+        (void)env->CallIntMethod(inputStream, availableId);
 
         jbyteArray headerBuf = env->NewByteArray(18);
         jmethodID readId = env->GetMethodID(

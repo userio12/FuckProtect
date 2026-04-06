@@ -1,3 +1,4 @@
+#pragma GCC diagnostic ignored "-Wunused-function"
 /**
  * APK signature verification for FuckProtect shell.
  *

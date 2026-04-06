@@ -2,6 +2,7 @@ package com.fuckprotect.shell.loader;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 

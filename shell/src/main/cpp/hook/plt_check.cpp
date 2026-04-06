@@ -1,3 +1,4 @@
+#pragma GCC diagnostic ignored "-Wunused-function"
 #pragma once
 /**
  * PLT/GOT integrity check for FuckProtect shell.
