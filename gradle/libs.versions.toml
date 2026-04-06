@@ -9,6 +9,9 @@ picocli = "4.7.6"
 zip4j = "2.11.5"
 bouncycastle = "1.78.1"
 kotlinxCoroutines = "1.8.1"
+dexlib2 = "2.5.2"
+commonsLang3 = "3.14.0"
+commonsIo = "2.15.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -24,3 +27,6 @@ picocli = { group = "info.picocli", name = "picocli", version.ref = "picocli" }
 zip4j = { group = "net.lingala.zip4j", name = "zip4j", version.ref = "zip4j" }
 bouncycastle = { group = "org.bouncycastle", name = "bcpkix-jdk18on", version.ref = "bouncycastle" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+dexlib2 = { group = "org.smali", name = "dexlib2", version.ref = "dexlib2" }
+commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang3" }
+commons-io = { group = "commons-io", name = "commons-io", version.ref = "commonsIo" }

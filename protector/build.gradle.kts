@@ -14,6 +14,10 @@ dependencies {
     implementation(libs.zip4j)
     implementation(libs.bouncycastle)
     implementation(libs.kotlinx.coroutines)
+    // dexlib2 for proper DEX manipulation (same as dpt-shell)
+    implementation(libs.dexlib2)
+    implementation(libs.commons.lang3)
+    implementation(libs.commons.io)
     // Only pull in the Gradle API types we need, not the full runtime
     compileOnly(gradleApi())
 
