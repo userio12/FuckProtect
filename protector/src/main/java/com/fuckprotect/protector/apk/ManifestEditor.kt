@@ -62,6 +62,64 @@ class ManifestEditor {
     }
 
     /**
+     * Set the AppComponentFactory in the <application> tag.
+     *
+     * On Android 9+ (API 28+), the appComponentFactory attribute is used
+     * to intercept all component creation. This is more reliable than
+     * hijacking the Application class.
+     *
+     * @param manifestXml The manifest content
+     * @param originalFactory The original AppComponentFactory class name (or empty if none)
+     * @return Modified manifest content
+     */
+    fun hijackComponentFactory(manifestXml: String, originalFactory: String): String {
+        val shellFactory = Constants.SHELL_COMPONENT_FACTORY
+
+        var modified = manifestXml
+
+        // If there's already an appComponentFactory attribute, replace it
+        val hasFactory = modified.contains(
+            Regex("""android:appComponentFactory\s*=""", RegexOption.IGNORE_CASE)
+        )
+
+        if (hasFactory) {
+            modified = modified.replaceFirst(
+                Regex("""(android:appComponentFactory\s*=\s*")([^"]+)(")""", RegexOption.IGNORE_CASE),
+                "$1$shellFactory$3",
+            )
+        } else {
+            // Add the attribute to the <application> tag
+            modified = modified.replaceFirst(
+                Regex("""(<application\s+)""", RegexOption.IGNORE_CASE),
+                """$1android:appComponentFactory="$shellFactory" """,
+            )
+        }
+
+        // Store the original factory name as metadata
+        if (originalFactory.isNotEmpty()) {
+            val factoryMetaTag =
+                """<meta-data android:name="${Constants.META_ORIGINAL_FACTORY}" android:value="$originalFactory" />"""
+            modified = modified.replaceFirst(
+                Regex("""(<application[^>]*>)""", RegexOption.IGNORE_CASE),
+                "$1\n    $factoryMetaTag",
+            )
+        }
+
+        return modified
+    }
+
+    /**
+     * Extract the appComponentFactory value from the manifest.
+     */
+    fun getAppComponentFactory(xml: String): String? {
+        val regex = Regex(
+            """android:appComponentFactory\s*=\s*"([^"]+)""",
+            RegexOption.IGNORE_CASE,
+        )
+        return regex.find(xml)?.groupValues?.get(1)
+    }
+
+    /**
      * Modify the manifest file in place.
      *
      * @param manifestFile The AndroidManifest.xml file

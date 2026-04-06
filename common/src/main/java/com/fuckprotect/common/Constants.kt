@@ -36,8 +36,14 @@ object Constants {
     /** Name of the shell Application class injected into protected APKs. */
     const val SHELL_APPLICATION_CLASS = "com.fuckprotect.shell.ShellApplication"
 
+    /** Name of the shell AppComponentFactory injected into protected APKs (Android 9+). */
+    const val SHELL_COMPONENT_FACTORY = "com.fuckprotect.shell.factory.ProxyComponentFactory"
+
     /** Manifest meta-data key storing the original Application class name. */
     const val META_ORIGINAL_APP_CLASS = "FUCKPROTECT_APP_CLASS"
+
+    /** Manifest meta-data key storing the original AppComponentFactory class name. */
+    const val META_ORIGINAL_FACTORY = "FUCKPROTECT_APP_FACTORY"
 
     /** Manifest meta-data key storing the protector version. */
     const val META_PROTECTOR_VERSION = "FUCKPROTECT_VERSION"

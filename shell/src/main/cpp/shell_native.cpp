@@ -325,3 +325,82 @@ Java_com_fuckprotect_shell_antidbg_AntiDebugTestNative_nativeAntiDebugInit(
 ) {
     anti_debug_init();
 }
+
+/* ─── ProxyComponentFactory native methods ─────────────────────────── */
+
+/**
+ * Get the original AppComponentFactory class name from payload metadata.
+ * This is read from the payload's app class name field (same field as
+ * Application class name — if it starts with a '.' it's an Application
+ * class, otherwise it could be an AppComponentFactory).
+ *
+ * For now, we store this as a static variable set during nativeInit.
+ */
+static char g_originalComponentFactory[256] = {0};
+
+JNIEXPORT jstring JNICALL
+Java_com_fuckprotect_shell_factory_ProxyComponentFactory_getOriginalComponentFactory(
+    JNIEnv *env, jclass /*clazz*/
+) {
+    if (g_originalComponentFactory[0] == '\0') {
+        return NULL;
+    }
+    return env->NewStringUTF(g_originalComponentFactory);
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_fuckprotect_shell_factory_ProxyComponentFactory_getOriginalApplicationName(
+    JNIEnv *env, jclass /*clazz*/
+) {
+    // Same as ShellApplication - read from stored value
+    // For now, return NULL (the ProxyComponentFactory will use the className parameter)
+    return NULL;
+}
+
+/**
+ * Initialize the shell from ProxyComponentFactory.
+ * This is the same as nativeInitWithContext but called from the factory.
+ */
+JNIEXPORT void JNICALL
+Java_com_fuckprotect_shell_factory_ProxyComponentFactory_initShell(
+    JNIEnv *env, jclass /*clazz*/
+) {
+    // Run anti-debugging and integrity checks
+    anti_debug_init();
+    anti_hook_init();
+    verify_plt_got_integrity();
+    verify_function_not_hooked("dlopen");
+    verify_function_not_hooked("dlsym");
+    verify_native_integrity();
+}
+
+/**
+ * Replace the class loader — delegates to the same logic as ShellApplication.
+ */
+JNIEXPORT void JNICALL
+Java_com_fuckprotect_shell_factory_ProxyComponentFactory_replaceClassLoader(
+    JNIEnv * /*env*/, jclass /*clazz*/, jobject /*targetClassLoader*/
+) {
+    // This is handled by the existing ClassLoaderProxy Java class
+    // The native side doesn't need to do anything here
+}
+
+/**
+ * Set the original AppComponentFactory name (called from Java during initialization).
+ */
+JNIEXPORT void JNICALL
+Java_com_fuckprotect_shell_factory_ProxyComponentFactory_nativeSetOriginalFactory(
+    JNIEnv *env, jclass /*clazz*/, jstring factoryName
+) {
+    if (factoryName == NULL) {
+        g_originalComponentFactory[0] = '\0';
+        return;
+    }
+
+    const char *name = env->GetStringUTFChars(factoryName, NULL);
+    if (name != NULL) {
+        strncpy(g_originalComponentFactory, name, sizeof(g_originalComponentFactory) - 1);
+        g_originalComponentFactory[sizeof(g_originalComponentFactory) - 1] = '\0';
+        env->ReleaseStringUTFChars(factoryName, name);
+    }
+}
