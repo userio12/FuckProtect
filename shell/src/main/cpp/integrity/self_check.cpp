@@ -1,4 +1,3 @@
-#pragma once
 /**
  * APK signature verification for FuckProtect shell.
  *
@@ -26,9 +25,6 @@
 /**
  * Get the APK path from the process command line.
  *
- * On Android, the APK path can be read from /proc/self/cmdline or
- * obtained via Java Context.getPackageResourcePath().
- *
  * @param env JNI environment
  * @param context Java Context object
  * @return APK path string (must be freed), or NULL on error
@@ -36,7 +32,7 @@
 static char *get_apk_path(JNIEnv *env, jobject context) {
     jclass ctxClass = env->GetObjectClass(context);
     jmethodID getApkPathId = env->GetMethodID(
-        env, ctxClass, "getPackageResourcePath", "()Ljava/lang/String;"
+        ctxClass, "getPackageResourcePath", "()Ljava/lang/String;"
     );
     if (getApkPathId == NULL) return NULL;
 
@@ -46,6 +42,8 @@ static char *get_apk_path(JNIEnv *env, jobject context) {
     const char *cPath = env->GetStringUTFChars(jPath, NULL);
     char *result = strdup(cPath);
     env->ReleaseStringUTFChars(jPath, cPath);
+    env->DeleteLocalRef(jPath);
+    env->DeleteLocalRef(ctxClass);
 
     return result;
 }
@@ -67,7 +65,7 @@ static int compute_apk_hash(const char *apk_path, uint8_t *hash_out) {
      * would add significant code size. Call from native via JNI. */
     (void)apk_path;
     (void)hash_out;
-    /* TODO: Implement in Phase 2 — for now this is done from Java side */
+    /* TODO: Implement in Phase 3 — for now this is done from Java side */
     return -1;
 }
 
@@ -82,7 +80,7 @@ static int compute_apk_hash(const char *apk_path, uint8_t *hash_out) {
  */
 JNIEXPORT jboolean JNICALL
 Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeVerifySignature(
-    JNIEnv *env, jbyteArray currentCertHash
+    JNIEnv *env, jclass /*clazz*/, jbyteArray currentCertHash
 ) {
     if (currentCertHash == NULL) {
         SIG_LOG_ERR("Null certificate hash");
@@ -119,7 +117,7 @@ Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeVerifySignature(
  */
 JNIEXPORT jbyteArray JNICALL
 Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeGetExpectedHash(
-    JNIEnv *env, jclass __attribute__((unused)) clazz
+    JNIEnv *env, jclass /*clazz*/
 ) {
     uint8_t hash[32];
     get_embedded_cert_hash(hash);
@@ -138,12 +136,7 @@ Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeGetExpectedHash(
  */
 JNIEXPORT jboolean JNICALL
 Java_com_fuckprotect_shell_integrity_ApkIntegrity_nativeVerifyApkHash(
-    JNIEnv *env, jbyteArray currentHash
+    JNIEnv * /*env*/, jclass /*clazz*/, jbyteArray /*currentHash*/
 ) {
-    
-    (void)env;
-    (void)clazz;
-    (void)clazz;
-    (void)currentHash;
     return JNI_TRUE;
 }
