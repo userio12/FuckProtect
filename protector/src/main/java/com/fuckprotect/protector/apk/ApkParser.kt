@@ -173,9 +173,9 @@ class ApkParser {
         } catch (_: Exception) {
             // Try UTF-16
             try {
-                bytes.decodeToString(Charsets.UTF_16)
+                String(bytes, Charsets.UTF_16)
             } catch (_: Exception) {
-                bytes.decodeToString(Charsets.ISO_8859_1)
+                String(bytes, Charsets.ISO_8859_1)
             }
         }
     }
