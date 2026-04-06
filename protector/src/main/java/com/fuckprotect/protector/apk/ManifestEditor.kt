@@ -100,6 +100,30 @@ class ManifestEditor {
         )
     }
 
+    /**
+     * Extract the android:name value from the <application> tag.
+     */
+    fun parseApplicationClassFromXml(xml: String): String? {
+        val regex = Regex("""android:name\s*=\s*"([^"]+)""", RegexOption.IGNORE_CASE)
+        val matches = regex.findAll(xml).toList()
+        // Find the first one inside an <application> tag
+        val appRegex = Regex("""<application[^>]*>""", RegexOption.IGNORE_CASE)
+        val appMatches = appRegex.findAll(xml).toList()
+        if (appMatches.isEmpty()) return null
+
+        val appStart = appMatches.first().range.last
+        val nameMatch = regex.findAll(xml).firstOrNull { it.range.first > appStart }
+        return nameMatch?.groupValues?.get(1)
+    }
+
+    /**
+     * Extract the package attribute from the <manifest> tag.
+     */
+    fun parsePackageNameFromXml(xml: String): String {
+        val regex = Regex("""package\s*=\s*"([^"]+)""", RegexOption.IGNORE_CASE)
+        return regex.find(xml)?.groupValues?.get(1) ?: ""
+    }
+
     data class HijackVerification(
         val hasShellApplication: Boolean,
         val hasMetaData: Boolean,
