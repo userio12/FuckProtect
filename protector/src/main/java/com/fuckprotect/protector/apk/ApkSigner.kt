@@ -58,6 +58,7 @@ class ApkSigner {
                     manifest.mainAttributes.put(Attributes.Name("Created-By"), "FuckProtect")
 
                     val md = MessageDigest.getInstance("SHA-256")
+                    val manifestEntries = mutableMapOf<String, String>()
 
                     // First pass: compute digests
                     while (true) {
