@@ -44,10 +44,17 @@ class ApkParser {
         require(apkFile.exists()) { "APK file not found: ${apkFile.absolutePath}" }
         outputDir.mkdirs()
 
-        // Extract the APK
+        // Extract all entries EXCEPT AndroidManifest.xml (we'll handle it specially)
         ZipFile(apkFile).use { zip ->
-            zip.extractAll(outputDir.absolutePath)
+            zip.fileHeaders.forEach { header ->
+                if (header.fileName != "AndroidManifest.xml") {
+                    zip.extractFile(header, outputDir.absolutePath)
+                }
+            }
         }
+
+        // Read AndroidManifest.xml directly from APK to preserve original format
+        val manifest = readManifestDirectly(apkFile, outputDir)
 
         // Discover DEX files
         val dexFiles = outputDir.listFiles { f ->
@@ -59,9 +66,6 @@ class ApkParser {
             }
         ) ?: emptyList()
 
-        // Discover manifest
-        val manifest = File(outputDir, "AndroidManifest.xml").takeIf { it.exists() }
-
         // Discover native libs
         val nativeLibDir = File(outputDir, "lib").takeIf { it.exists() && it.isDirectory }
 
@@ -71,7 +75,7 @@ class ApkParser {
         // Discover resources
         val resourcesArsc = File(outputDir, "resources.arsc").takeIf { it.exists() }
 
-        // List other entries (entries that are not DEX, manifest, or native libs)
+        // List other entries
         val otherEntries = outputDir.listFiles()?.filter { f ->
             f.name != "AndroidManifest.xml" &&
                     f.name != "resources.arsc" &&
@@ -94,24 +98,85 @@ class ApkParser {
     }
 
     /**
+     * Read AndroidManifest.xml directly from APK to avoid zip4j decompression issues.
+     */
+    private fun readManifestDirectly(apkFile: File, outputDir: File): File? {
+        val manifestFile = File(outputDir, "AndroidManifest.xml")
+
+        try {
+            ZipFile(apkFile).use { zip ->
+                val header = zip.fileHeaders.find { it.fileName == "AndroidManifest.xml" }
+                    ?: return@use
+
+                // Read raw bytes from the ZIP entry
+                zip.getInputStream(header).use { inputStream ->
+                    val bytes = inputStream.readBytes()
+                    manifestFile.writeBytes(bytes)
+                }
+            }
+        } catch (e: Exception) {
+            System.err.println("DEBUG: Failed to read manifest directly: ${e.message}")
+        }
+
+        return manifestFile.takeIf { it.exists() && it.length() > 0 }
+    }
+
+    /**
      * Parse the Application class name from AndroidManifest.xml.
      *
-     * Handles binary AXML format (the default) and falls back to plain XML.
+     * Handles binary AXML format, compressed manifest, and plain XML.
      */
     fun parseApplicationClass(extracted: ExtractedApk): String? {
         val manifest = extracted.manifest ?: return null
-        val bytes = manifest.readBytes()
+        var bytes = manifest.readBytes()
         System.err.println("DEBUG: Manifest size: ${bytes.size} bytes")
         System.err.println("DEBUG: First 8 bytes: ${bytes.take(8).joinToString(" ") { "%02x".format(it) }}")
+
+        // Try to decompress if it looks like zlib/deflate compressed AXML
+        // zlib header: 78 9C (default compression) or 78 01 (low compression)
+        if (bytes.size >= 2 && bytes[0] == 0x78.toByte() &&
+            (bytes[1] == 0x9C.toByte() || bytes[1] == 0x01.toByte() || bytes[1] == 0xDA.toByte())) {
+            try {
+                bytes = java.util.zip.InflaterInputStream(bytes.inputStream()).use { it.readBytes() }
+                System.err.println("DEBUG: Decompressed to ${bytes.size} bytes")
+                System.err.println("DEBUG: First 8 bytes after decompress: ${bytes.take(8).joinToString(" ") { "%02x".format(it) }}")
+            } catch (e: Exception) {
+                System.err.println("DEBUG: Decompression failed: ${e.message}")
+            }
+        }
+
         // Check if it's binary AXML (starts with AXML\x00\x00\x00\x00)
         val isAxml = bytes.size >= 8 &&
             bytes[0] == 0x41.toByte() && bytes[1] == 0x58.toByte() &&
             bytes[2] == 0x4D.toByte() && bytes[3] == 0x4C.toByte()
         System.err.println("DEBUG: Is AXML: $isAxml")
-        return if (isAxml) {
-            parseApplicationClassFromAxml(bytes)
-        } else {
-            parseApplicationClassFromXml(bytes.decodeToString())
+
+        if (isAxml) {
+            return parseApplicationClassFromAxml(bytes)
+        }
+
+        // Try to decode as UTF-8 or UTF-16 text
+        val xmlText = tryDecodeAsText(bytes)
+        System.err.println("DEBUG: Decoded text length: ${xmlText.length}")
+        System.err.println("DEBUG: First 100 chars: ${xmlText.take(100)}")
+
+        return parseApplicationClassFromXml(xmlText)
+    }
+
+    /**
+     * Try to decode bytes as UTF-8 or UTF-16 text.
+     */
+    private fun tryDecodeAsText(bytes: ByteArray): String {
+        // Try UTF-8 first
+        return try {
+            bytes.decodeToString()
+        } catch (_: Exception) {
+            // Try UTF-16
+            try {
+                bytes.decodeToString(Charsets.UTF_16)
+            } catch (_: Exception) {
+                bytes.decodeToString(Charsets.ISO_8859_1)
+            }
         }
     }
 
