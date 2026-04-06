@@ -14,8 +14,8 @@ dependencies {
     implementation(libs.zip4j)
     implementation(libs.bouncycastle)
     implementation(libs.kotlinx.coroutines)
-    // gradleApi includes kotlin-stdlib, exclude it to avoid duplicate
-    implementation(gradleApi()) {
+    implementation(gradleApi())
+    configurations.runtimeClasspath {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
     }
 
