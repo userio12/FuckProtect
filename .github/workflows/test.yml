@@ -1,0 +1,26 @@
+name: Test Workflow
+
+on:
+  push:
+    branches: [ master, main, develop ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Echo success
+        run: echo "GitHub Actions is working!"
+
+      - name: Show files
+        run: |
+          echo "=== Project structure ==="
+          ls -la
+          echo "=== Protector files ==="
+          find protector/src/main/java -type f | wc -l
+          echo "=== Shell files ==="
+          find shell/src/main -type f | wc -l
