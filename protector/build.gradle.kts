@@ -30,11 +30,8 @@ tasks.test {
 }
 
 // ─── Fix Gradle 9.0 duplicate JAR issue ─────────────────────────────
-tasks.named("distTar").configure {
-    enabled = false
-}
-tasks.named("distZip").configure {
-    enabled = false
+tasks.withType<Sync>().configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 // ─── Gradle Plugin Registration ─────────────────────────────────────
