@@ -1,4 +1,3 @@
-/**
  * ART method hooking for FuckProtect shell.
  *
  * Hooks art::ClassLinker::DefineClass or ClassLoader.loadClass to intercept

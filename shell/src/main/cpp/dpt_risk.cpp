@@ -1,4 +1,3 @@
-#pragma once
 /**
  * Anti-debugging checks for FuckProtect shell.
  *

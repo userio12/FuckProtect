@@ -31,12 +31,7 @@
 
 #include "dpt_risk.cpp"
 #include "dpt_util.cpp"
-#include "dpt_protect.cpp"
 #include "dpt_hook.cpp"
-#include "dpt_plt.cpp"
-#include "dpt_anti_hook.cpp"
-#include "dpt_verify.cpp"
-#include "dpt_integrity.cpp"
 #include "dpt_crypto.c"
 #include "dpt_key.c"
 #include "rc4/rc4.c"

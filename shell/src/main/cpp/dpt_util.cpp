@@ -1,4 +1,3 @@
-#pragma once
 /**
  * Continuous background monitoring for FuckProtect shell.
  *
@@ -27,10 +26,7 @@
 #include <sys/syscall.h>
 #include <android/log.h>
 
-#include "antidbg/anti_debug.cpp"    /* Anti-debugging checks */
-#include "hook/anti_hook.cpp"        /* Anti-hooking measures */
-#include "hook/plt_check.cpp"        /* PLT/GOT integrity */
-#include "integrity/self_integrity.cpp" /* Native self-integrity */
+// // anti-debug moved to dpt_risk.cpp    /* Anti-debugging checks */
 
 #define MON_TAG "FP_Monitor"
 #define MON_LOG(fmt, ...) \

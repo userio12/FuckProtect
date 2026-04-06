@@ -1,4 +1,3 @@
-#pragma once
 /**
  * Tiny AES-256-CBC implementation (public domain, based on tiny-aes-c).
  *

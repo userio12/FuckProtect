@@ -10,15 +10,9 @@ if(ENABLE_OBFUSCATION)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mllvm -fla -mllvm -sub -mllvm -bcf")
 endif()
 
-# Source files - matching dpt-shell structure exactly
+# Source files - dpt.cpp includes all other .cpp files via #include
+# Only compile files that are NOT included by dpt.cpp
 set(SHELL_SOURCES
-    dpt.cpp
-    dpt_crypto.cpp
-    dpt_hook.cpp
-    dpt_jni.cpp
-    dpt_risk.cpp
-    dpt_util.cpp
-    common/dpt_string.cpp
     dex/CodeItem.cpp
     dex/MultiDexCode.cpp
     dex/dex_file.cpp
