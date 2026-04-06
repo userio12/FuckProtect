@@ -10,6 +10,7 @@ import com.fuckprotect.protector.dex.DexEncryptor
 import com.fuckprotect.protector.dex.JunkCodeGenerator
 import com.fuckprotect.protector.dex.KeyDerivation
 import com.fuckprotect.protector.dex.PayloadBuilder
+import com.fuckprotect.protector.dex.hollow.DexMethodHollower
 import com.fuckprotect.protector.embedder.SignatureEmbedder
 import com.fuckprotect.protector.native.SoFileEncryptor
 import picocli.CommandLine
@@ -142,7 +143,9 @@ class Protector : Callable<Int> {
             val aesKey = KeyDerivation.deriveFromCertBytes(certHash)
             log("  AES key derived from signing certificate: ${KeyDerivation.toHexString(certHash).take(16)}...")
 
-            // Encrypt the primary DEX (classes.dex)
+            // Phase 2b: Hollow out methods (optional — only for critical classes)
+            log("Phase 2b: Hollowing method bodies...")
+            val hollower = DexMethodHollower()
             val primaryDex = extracted.dexFiles.firstOrNull()
             if (primaryDex == null) {
                 System.err.println("ERROR: No DEX files found in APK")
@@ -150,7 +153,25 @@ class Protector : Callable<Int> {
             }
 
             val dexBytes = primaryDex.readBytes()
-            val encrypted = dexEncryptor.encrypt(dexBytes, aesKey)
+            val hollowResult = hollower.hollowMethods(dexBytes)
+            log("  Methods hollowed: ${hollowResult.methodCount}")
+
+            // Write hollowed DEX back
+            primaryDex.writeBytes(hollowResult.hollowedDex)
+
+            // Write extracted code to assets
+            if (hollowResult.methodCount > 0) {
+                val extractedCodePayload = hollower.writeExtractedCode(hollowResult.extractedCode)
+                val hollowPayloadFile = File(tempWork, "assets/fp_hollow.dat").apply {
+                    parentFile?.mkdirs()
+                }
+                hollowPayloadFile.writeBytes(extractedCodePayload)
+                log("  Hollowed code payload: ${extractedCodePayload.size} bytes")
+            }
+
+            // Phase 3: Encrypt the hollowed DEX
+            log("Phase 3: Encrypting hollowed DEX...")
+            val encrypted = dexEncryptor.encrypt(primaryDex.readBytes(), aesKey)
             log("  Primary DEX encrypted: ${dexBytes.size} -> ${encrypted.totalSize} bytes (with IV)")
 
             // Build the payload

@@ -39,6 +39,7 @@
 #include "integrity/self_integrity.cpp" /* Native self-integrity */
 #include "hook/anti_hook.cpp"     /* Anti-hooking measures */
 #include "hook/plt_check.cpp"     /* PLT/GOT integrity */
+#include "hook/art_hook.cpp"      /* ART method hooking for hollowed methods */
 #include "utils/string_obfuscate.cpp" /* Encrypted strings */
 
 /* Log macros using encrypted strings */
@@ -339,6 +340,10 @@ Java_com_fuckprotect_shell_ShellApplication_nativeInitWithContext(
     /* ─── Step 8: Decrypt native library sections ──────────────────── */
     decrypt_so_sections();
     LOGD("nativeInit: native library sections decrypted");
+
+    /* ─── Step 9: Install ART method hooks ─────────────────────────── */
+    hook_install_DefineClass();
+    LOGD("nativeInit: ART method hooks installed");
 
     LOGD("nativeInit: all initialization checks passed");
 }
