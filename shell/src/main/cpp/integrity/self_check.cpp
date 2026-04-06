@@ -35,7 +35,7 @@
  */
 static char *get_apk_path(JNIEnv *env, jobject context) {
     jclass ctxClass = env->GetObjectClass(context);
-    jmethodID getApkPathId = (*env)->GetMethodID(
+    jmethodID getApkPathId = env->GetMethodID(
         env, ctxClass, "getPackageResourcePath", "()Ljava/lang/String;"
     );
     if (getApkPathId == NULL) return NULL;
@@ -82,7 +82,7 @@ static int compute_apk_hash(const char *apk_path, uint8_t *hash_out) {
  */
 JNIEXPORT jboolean JNICALL
 Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeVerifySignature(
-    JNIEnv *env, jclass clazz, jbyteArray currentCertHash
+    JNIEnv *env, jbyteArray currentCertHash
 ) {
     if (currentCertHash == NULL) {
         SIG_LOG_ERR("Null certificate hash");
@@ -119,7 +119,7 @@ Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeVerifySignature(
  */
 JNIEXPORT jbyteArray JNICALL
 Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeGetExpectedHash(
-    JNIEnv *env, jclass clazz
+    JNIEnv *env, jclass __attribute__((unused)) clazz
 ) {
     uint8_t hash[32];
     get_embedded_cert_hash(hash);
@@ -138,9 +138,11 @@ Java_com_fuckprotect_shell_integrity_SignatureVerifier_nativeGetExpectedHash(
  */
 JNIEXPORT jboolean JNICALL
 Java_com_fuckprotect_shell_integrity_ApkIntegrity_nativeVerifyApkHash(
-    JNIEnv *env, jclass clazz, jbyteArray currentHash
+    JNIEnv *env, jbyteArray currentHash
 ) {
+    
     (void)env;
+    (void)clazz;
     (void)clazz;
     (void)currentHash;
     return JNI_TRUE;

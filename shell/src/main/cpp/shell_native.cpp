@@ -127,78 +127,78 @@ Java_com_fuckprotect_shell_ShellApplication_nativeInitWithContext(
      * is enabled. We need to re-read the payload for this. */
 
     /* Read payload from assets */
-    jclass ctxClass = (*env)->GetObjectClass(env, context);
-    jmethodID getAssetsId = (*env)->GetMethodID(
+    jclass ctxClass = env->GetObjectClass(context);
+    jmethodID getAssetsId = env->GetMethodID(
         env, ctxClass, "getAssets", "()Landroid/content/res/AssetManager;"
     );
     if (getAssetsId == NULL) return;
 
-    jobject assetManager = (*env)->CallObjectMethod(env, context, getAssetsId);
+    jobject assetManager = env->CallObjectMethod(context, getAssetsId);
     if (assetManager == NULL) return;
 
     /* Open fp_payload.dat */
-    jclass amClass = (*env)->GetObjectClass(env, assetManager);
-    jmethodID openId = (*env)->GetMethodID(
+    jclass amClass = env->GetObjectClass(assetManager);
+    jmethodID openId = env->GetMethodID(
         env, amClass, "open", "(Ljava/lang/String;)Ljava/io/InputStream;"
     );
-    jstring payloadName = (*env)->NewStringUTF(env, "fp_payload.dat");
-    jobject inputStream = (*env)->CallObjectMethod(env, assetManager, openId, payloadName);
-    (*env)->DeleteLocalRef(env, payloadName);
+    jstring payloadName = env->NewStringUTF("fp_payload.dat");
+    jobject inputStream = env->CallObjectMethod(assetManager, openId, payloadName);
+    env->DeleteLocalRef(payloadName);
 
     if (inputStream != NULL) {
         /* Read available bytes to get header */
-        jclass isClass = (*env)->GetObjectClass(env, inputStream);
-        jmethodID availableId = (*env)->GetMethodID(
+        jclass isClass = env->GetObjectClass(inputStream);
+        jmethodID availableId = env->GetMethodID(
             env, isClass, "available", "()I"
         );
-        jint available = (*env)->CallIntMethod(env, inputStream, availableId);
+        jint available = env->CallIntMethod(inputStream, availableId);
 
         /* We only need the first 18 bytes for flags */
-        jbyteArray headerBuf = (*env)->NewByteArray(env, 18);
-        jbyte *headerBytes = (*env)->GetByteArrayElements(env, headerBuf, NULL);
+        jbyteArray headerBuf = env->NewByteArray(18);
+        jbyte *headerBytes = env->GetByteArrayElements(headerBuf, NULL);
 
         /* Read header bytes */
-        jmethodID readId = (*env)->GetMethodID(
+        jmethodID readId = env->GetMethodID(
             env, isClass, "read", "([BII)I"
         );
-        (*env)->CallIntMethod(env, inputStream, readId, headerBuf, 0, 18);
-        headerBytes = (*env)->GetByteArrayElements(env, headerBuf, NULL);
+        env->CallIntMethod(inputStream, readId, headerBuf, 0, 18);
+        headerBytes = env->GetByteArrayElements(headerBuf, NULL);
 
         /* Extract flags (offset 6, 2 bytes big-endian) */
         int flags = ((headerBytes[6] & 0xFF) << 8) | (headerBytes[7] & 0xFF);
 
-        (*env)->ReleaseByteArrayElements(env, headerBuf, headerBytes, JNI_ABORT);
-        (*env)->DeleteLocalRef(env, headerBuf);
+        env->ReleaseByteArrayElements(headerBuf, headerBytes, JNI_ABORT);
+        env->DeleteLocalRef(headerBuf);
 
         /* Close stream */
-        jmethodID closeId = (*env)->GetMethodID(env, isClass, "close", "()V");
-        (*env)->CallVoidMethod(env, inputStream, closeId);
+        jmethodID closeId = env->GetMethodID(isClass, "close", "()V");
+        env->CallVoidMethod(inputStream, closeId);
 
         /* If signature verification flag is set, verify now */
         if (flags & FLAG_SIGNATURE_VERIFICATION) {
             LOGD("nativeInit: signature verification enabled, checking...");
 
             /* Get current cert hash from Java */
-            jclass svClass = (*env)->FindClass(
+            jclass svClass = env->FindClass(
                 env, "com/fuckprotect/shell/integrity/SignatureVerifier"
             );
             if (svClass != NULL) {
-                jmethodID getHashId = (*env)->GetStaticMethodID(
+                jmethodID getHashId = env->GetStaticMethodID(
                     env, svClass, "getCurrentCertHash",
                     "(Landroid/content/Context;)[B"
                 );
                 if (getHashId != NULL) {
-                    jbyteArray currentHash = (jbyteArray)(*env)->CallStaticObjectMethod(
+                    jbyteArray currentHash = (jbyteArray)env->CallStaticObjectMethod(
                         env, svClass, getHashId, context
                     );
                     if (currentHash != NULL) {
-                        jsize hashLen = (*env)->GetArrayLength(env, currentHash);
+                        jsize hashLen = env->GetArrayLength(currentHash);
                         if (hashLen == 32) {
-                            jbyte *hashBytes = (*env)->GetByteArrayElements(
+                            jbyte *hashBytes = env->GetByteArrayElements(
                                 env, currentHash, NULL
                             );
                             int result = verify_cert_hash((const uint8_t *)hashBytes);
-                            (*env)->ReleaseByteArrayElements(
+                            env->ReleaseByteArrayElements(
                                 env, currentHash, hashBytes, JNI_ABORT
                             );
 
@@ -210,7 +210,7 @@ Java_com_fuckprotect_shell_ShellApplication_nativeInitWithContext(
                         }
                     }
                 }
-                (*env)->DeleteLocalRef(env, svClass);
+                env->DeleteLocalRef(svClass);
             }
         }
     }
@@ -272,8 +272,8 @@ Java_com_fuckprotect_shell_ShellApplication_nativeDecryptDex(
     }
 
     /* Get payload bytes */
-    jsize payload_len = (*env)->GetArrayLength(env, payload);
-    jbyte *payload_bytes = (*env)->GetByteArrayElements(env, payload, NULL);
+    jsize payload_len = env->GetArrayLength(payload);
+    jbyte *payload_bytes = env->GetByteArrayElements(payload, NULL);
     if (payload_bytes == NULL) {
         LOGE("nativeDecryptDex: failed to get payload elements");
         return NULL;
@@ -288,14 +288,14 @@ Java_com_fuckprotect_shell_ShellApplication_nativeDecryptDex(
         (const uint8_t *)payload_bytes, payload_len,
         &encrypted_dex, &encrypted_dex_len, &flags
     ) != 0) {
-        (*env)->ReleaseByteArrayElements(env, payload, payload_bytes, JNI_ABORT);
+        env->ReleaseByteArrayElements(payload, payload_bytes, JNI_ABORT);
         LOGE("nativeDecryptDex: payload parsing failed");
         return NULL;
     }
 
     /* The first 16 bytes of encrypted_dex are the IV */
     if (encrypted_dex_len <= IV_SIZE) {
-        (*env)->ReleaseByteArrayElements(env, payload, payload_bytes, JNI_ABORT);
+        env->ReleaseByteArrayElements(payload, payload_bytes, JNI_ABORT);
         LOGE("nativeDecryptDex: encrypted data too short: %d", encrypted_dex_len);
         return NULL;
     }
@@ -313,7 +313,7 @@ Java_com_fuckprotect_shell_ShellApplication_nativeDecryptDex(
     /* Decrypt: allocate output buffer */
     uint8_t *decrypted = (uint8_t *)malloc(ciphertext_len);
     if (decrypted == NULL) {
-        (*env)->ReleaseByteArrayElements(env, payload, payload_bytes, JNI_ABORT);
+        env->ReleaseByteArrayElements(payload, payload_bytes, JNI_ABORT);
         LOGE("nativeDecryptDex: malloc failed");
         return NULL;
     }
@@ -329,7 +329,7 @@ Java_com_fuckprotect_shell_ShellApplication_nativeDecryptDex(
     int plain_len = pkcs7_unpad(decrypted, ciphertext_len);
     if (plain_len < 0) {
         free(decrypted);
-        (*env)->ReleaseByteArrayElements(env, payload, payload_bytes, JNI_ABORT);
+        env->ReleaseByteArrayElements(payload, payload_bytes, JNI_ABORT);
         LOGE("nativeDecryptDex: PKCS#7 unpadding failed");
         return NULL;
     }
@@ -345,14 +345,14 @@ Java_com_fuckprotect_shell_ShellApplication_nativeDecryptDex(
         /* Wipe and return NULL — wrong key or corrupted */
         memset(decrypted, 0, ciphertext_len);
         free(decrypted);
-        (*env)->ReleaseByteArrayElements(env, payload, payload_bytes, JNI_ABORT);
+        env->ReleaseByteArrayElements(payload, payload_bytes, JNI_ABORT);
         return NULL;
     }
 
     /* Create Java byte array with the decrypted DEX */
-    jbyteArray result = (*env)->NewByteArray(env, plain_len);
+    jbyteArray result = env->NewByteArray(plain_len);
     if (result != NULL) {
-        (*env)->SetByteArrayRegion(env, result, 0, plain_len, (jbyte *)decrypted);
+        env->SetByteArrayRegion(result, 0, plain_len, (jbyte *)decrypted);
     }
 
     /* Clean up: wipe sensitive data */
@@ -360,7 +360,7 @@ Java_com_fuckprotect_shell_ShellApplication_nativeDecryptDex(
     free(decrypted);
     memset(aes_key, 0, sizeof(aes_key));
     memset(iv_copy, 0, sizeof(iv_copy));
-    (*env)->ReleaseByteArrayElements(env, payload, payload_bytes, JNI_ABORT);
+    env->ReleaseByteArrayElements(payload, payload_bytes, JNI_ABORT);
 
     return result;
 }
