@@ -103,6 +103,9 @@ Before creating anything on GitHub, initialize the local git repo first.
 ```bash
 cd /storage/emulated/0/AndroidCSProjects/FuckProtect
 
+# Fix Termux storage permission issue (REQUIRED on Android)
+git config --global --add safe.directory /storage/emulated/0/AndroidCSProjects/FuckProtect
+
 # Initialize a local git repository
 git init
 
@@ -357,6 +360,18 @@ Verify:
 
 ## 8. Troubleshooting
 
+### Problem: "dubious ownership" or "safe.directory" error
+
+This is **common on Termux** due to Android's shared storage permissions.
+
+```bash
+# Add the project directory as a safe directory
+git config --global --add safe.directory /storage/emulated/0/AndroidCSProjects/FuckProtect
+
+# Then retry
+git commit -m "initial commit"
+```
+
 ### Problem: "Permission denied" or "Authentication failed"
 
 ```bash
@@ -456,6 +471,7 @@ git push origin main
 # ─── Setup ───────────────────────────────────────────
 pkg install git gh
 cd /storage/emulated/0/AndroidCSProjects/FuckProtect
+git config --global --add safe.directory /storage/emulated/0/AndroidCSProjects/FuckProtect
 git init
 git branch -M main
 git config user.name "YOUR_USERNAME"
