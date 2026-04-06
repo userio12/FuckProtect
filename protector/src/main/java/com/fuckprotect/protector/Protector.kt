@@ -96,7 +96,7 @@ class Protector : Callable<Int> {
             LogUtils.info("Phase 3: Building payload...")
             val payloadDir = File(tempWork, "assets").apply { mkdirs() }
             val payloadFile = File(payloadDir, "fp_payload.dat")
-            payloadFile.writeBytes(encrypted)
+            payloadFile.writeBytes(encrypted.data)
 
             // Phase 4: Hijack manifest
             LogUtils.info("Phase 4: Modifying manifest...")

@@ -41,12 +41,7 @@ class FuckProtectPlugin : Plugin<Project> {
 
                     val protectTask = project.tasks.register(
                         "protect${variantName.replaceFirstChar { it.uppercaseChar() }}",
-                        FuckProtectTask::class.java,
                     ) { task ->
-                        task.description = "Protect the $variantName APK with FuckProtect"
-                        task.group = "fuckprotect"
-                        task.extension.set(extension)
-                        task.dependsOn(assembleTask)
                     }
 
                     project.logger.info("FuckProtect: Registered task $protectTask")

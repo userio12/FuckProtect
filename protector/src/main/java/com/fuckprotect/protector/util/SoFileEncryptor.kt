@@ -25,7 +25,7 @@ class SoFileEncryptor {
         if (!soFile.exists() || key.size < RC4_KEY_SIZE) return false
 
         val data = soFile.readBytes()
-        if (data.size < 4 || !data.take(4).contentEquals(byteArrayOf(0x7F.toByte(), 0x45, 0x4C, 0x46))) {
+        if (data.size < 4 || !data.take(4).toByteArray().contentEquals(byteArrayOf(0x7F.toByte(), 0x45, 0x4C, 0x46))) {
             return false
         }
 

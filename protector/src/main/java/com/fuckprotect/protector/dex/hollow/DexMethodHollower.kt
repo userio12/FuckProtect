@@ -7,9 +7,7 @@ import org.jf.dexlib2.iface.DexFile
 import org.jf.dexlib2.iface.Method
 import org.jf.dexlib2.iface.MethodImplementation
 import org.jf.dexlib2.iface.instruction.Instruction
-import org.jf.dexlib2.immutable.ImmutableClassDef
-import org.jf.dexlib2.immutable.ImmutableDexFile
-import org.jf.dexlib2.immutable.ImmutableMethod
+import org.jf.dexlib2.immutable.*
 import org.jf.dexlib2.rewriter.DexRewriter
 import org.jf.dexlib2.rewriter.Rewriter
 import org.jf.dexlib2.rewriter.RewriterModule
@@ -21,8 +19,6 @@ import java.io.File
  * Extracts method bytecode and replaces with NOP instructions.
  */
 class DexMethodHollower {
-
-    private val extractedMethods = mutableMapOf<String, ByteArray>()
 
     /**
      * Hollow all methods in a DEX file.
@@ -62,7 +58,7 @@ class DexMethodHollower {
             for (method in classDef.methods) {
                 val impl = method.implementation ?: continue
                 val code = serializeMethodCode(method, impl)
-                val key = "${classDef.type}->${method.name}${method.prototype}"
+                val key = "${classDef.type}->${method.name}${method.reference}"
                 result[key] = code
             }
         }
@@ -101,10 +97,11 @@ class DexMethodHollower {
                                     ImmutableMethod(
                                         method.definingClass,
                                         method.name,
-                                        method.parameters,
+                                        ImmutableList.copyOf(method.parameters),
                                         method.returnType,
                                         method.accessFlags,
-                                        method.annotations,
+                                        ImmutableSet.copyOf(method.annotations),
+                                        ImmutableSet.of(),
                                         hollowedImpl,
                                     )
                                 )
@@ -117,9 +114,9 @@ class DexMethodHollower {
                                 classDef.type,
                                 classDef.accessFlags,
                                 classDef.superclass,
-                                classDef.interfaces,
+                                ImmutableList.copyOf(classDef.interfaces),
                                 classDef.sourceFile,
-                                classDef.annotations,
+                                ImmutableSet.copyOf(classDef.annotations),
                                 classDef.fields,
                                 newMethods,
                             )

@@ -99,7 +99,7 @@ class Apk private constructor(private val builder: Builder) {
      */
     fun hijackManifest() {
         val manifest = manifestFile ?: return
-        ManifestEditor.hijackApplicationInPlace(manifest, applicationName)
+        com.fuckprotect.protector.res.ManifestEditor.hijackApplicationInPlace(manifest, applicationName)
         LogUtils.info("Manifest hijacked: %s -> ShellApplication", applicationName)
     }
 
