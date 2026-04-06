@@ -13,6 +13,7 @@ endif()
 # Source files - dpt.cpp includes all other .cpp files via #include
 # Only compile files that are NOT included by dpt.cpp
 set(SHELL_SOURCES
+    dpt_jni.cpp
     dex/CodeItem.cpp
     dex/MultiDexCode.cpp
     dex/dex_file.cpp
