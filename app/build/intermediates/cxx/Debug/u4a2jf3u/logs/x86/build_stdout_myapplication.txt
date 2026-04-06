@@ -1,0 +1,3 @@
+ninja: Entering directory `/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/x86'
+[1/2] Building CXX object CMakeFiles/myapplication.dir/native-lib.cpp.o
+[2/2] Linking CXX shared library /storage/emulated/0/AndroidCSProjects/FuckProtect/app/build/intermediates/cxx/Debug/u4a2jf3u/obj/x86/libmyapplication.so

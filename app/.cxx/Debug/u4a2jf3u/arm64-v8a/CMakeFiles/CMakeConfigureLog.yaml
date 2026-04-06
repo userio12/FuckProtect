@@ -1,0 +1,1477 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+    searched_directories:
+      - "/usr/local/sbin/uname"
+      - "/usr/local/bin/uname"
+      - "/usr/sbin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineSystem.cmake:207 (message)"
+      - "CMakeLists.txt:12 (project)"
+    message: |
+      The target system is: Android - 1 - aarch64
+      The host system is: Linux - 4.19.132-24202344 - aarch64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:468 (find_file)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:506 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/"
+    found: "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:12 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang 
+      Build flags: -g;-DANDROID;-fdata-sections;-ffunction-sections;-funwind-tables;-fstack-protector-strong;-no-canonical-prefixes;-D_FORTIFY_SOURCE=2;-Wformat;-Werror=format-security
+      Id flags: -c;--target=aarch64-none-linux-android21 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is Clang, found in:
+        /storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/4.3.0/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ld.lld"
+      - "ld"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-nm"
+      - "nm"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-nm"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-objdump"
+      - "objdump"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-objdump"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-objcopy"
+      - "objcopy"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-objcopy"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-readelf"
+      - "readelf"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-readelf"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-dlltool"
+      - "dlltool"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-dlltool"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-addr2line"
+      - "addr2line"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-addr2line"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "tapi"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    searched_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/tapi"
+      - "/usr/local/sbin/tapi"
+      - "/usr/local/bin/tapi"
+      - "/usr/sbin/tapi"
+      - "/usr/bin/tapi"
+      - "/sbin/tapi"
+      - "/bin/tapi"
+      - "/system/bin/tapi"
+      - "/system/xbin/tapi"
+      - "/usr/lib/aarch64-linux-android/21/bin/tapi"
+      - "/usr/lib/aarch64-linux-android/21/sbin/tapi"
+      - "/usr/lib/aarch64-linux-android/21/tapi"
+    found: false
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/Compiler/Clang-FindBinUtils.cmake:26 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_AR"
+    description: "LLVM archiver"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-ar-18.0"
+      - "llvm-ar-18"
+      - "llvm-ar18"
+      - "llvm-ar"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    searched_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ar-18.0"
+      - "/usr/local/sbin/llvm-ar-18.0"
+      - "/usr/local/bin/llvm-ar-18.0"
+      - "/usr/sbin/llvm-ar-18.0"
+      - "/usr/bin/llvm-ar-18.0"
+      - "/sbin/llvm-ar-18.0"
+      - "/bin/llvm-ar-18.0"
+      - "/system/bin/llvm-ar-18.0"
+      - "/system/xbin/llvm-ar-18.0"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ar-18.0"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ar-18.0"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ar-18.0"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ar-18"
+      - "/usr/local/sbin/llvm-ar-18"
+      - "/usr/local/bin/llvm-ar-18"
+      - "/usr/sbin/llvm-ar-18"
+      - "/usr/bin/llvm-ar-18"
+      - "/sbin/llvm-ar-18"
+      - "/bin/llvm-ar-18"
+      - "/system/bin/llvm-ar-18"
+      - "/system/xbin/llvm-ar-18"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ar-18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ar-18"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ar-18"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ar18"
+      - "/usr/local/sbin/llvm-ar18"
+      - "/usr/local/bin/llvm-ar18"
+      - "/usr/sbin/llvm-ar18"
+      - "/usr/bin/llvm-ar18"
+      - "/sbin/llvm-ar18"
+      - "/bin/llvm-ar18"
+      - "/system/bin/llvm-ar18"
+      - "/system/xbin/llvm-ar18"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ar18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ar18"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ar18"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ar"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/Compiler/Clang-FindBinUtils.cmake:38 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_RANLIB"
+    description: "Generate index for LLVM archive"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-ranlib-18.0"
+      - "llvm-ranlib-18"
+      - "llvm-ranlib18"
+      - "llvm-ranlib"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    searched_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ranlib-18.0"
+      - "/usr/local/sbin/llvm-ranlib-18.0"
+      - "/usr/local/bin/llvm-ranlib-18.0"
+      - "/usr/sbin/llvm-ranlib-18.0"
+      - "/usr/bin/llvm-ranlib-18.0"
+      - "/sbin/llvm-ranlib-18.0"
+      - "/bin/llvm-ranlib-18.0"
+      - "/system/bin/llvm-ranlib-18.0"
+      - "/system/xbin/llvm-ranlib-18.0"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ranlib-18.0"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ranlib-18.0"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ranlib-18.0"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ranlib-18"
+      - "/usr/local/sbin/llvm-ranlib-18"
+      - "/usr/local/bin/llvm-ranlib-18"
+      - "/usr/sbin/llvm-ranlib-18"
+      - "/usr/bin/llvm-ranlib-18"
+      - "/sbin/llvm-ranlib-18"
+      - "/bin/llvm-ranlib-18"
+      - "/system/bin/llvm-ranlib-18"
+      - "/system/xbin/llvm-ranlib-18"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ranlib-18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ranlib-18"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ranlib-18"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ranlib18"
+      - "/usr/local/sbin/llvm-ranlib18"
+      - "/usr/local/bin/llvm-ranlib18"
+      - "/usr/sbin/llvm-ranlib18"
+      - "/usr/bin/llvm-ranlib18"
+      - "/sbin/llvm-ranlib18"
+      - "/bin/llvm-ranlib18"
+      - "/system/bin/llvm-ranlib18"
+      - "/system/xbin/llvm-ranlib18"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ranlib18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ranlib18"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ranlib18"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ranlib"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/Compiler/Clang-FindBinUtils.cmake:50 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_CLANG_SCAN_DEPS"
+    description: "`clang-scan-deps` dependency scanner"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "clang-scan-deps-18.0"
+      - "clang-scan-deps-18"
+      - "clang-scan-deps18"
+      - "clang-scan-deps"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    searched_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps-18.0"
+      - "/usr/local/sbin/clang-scan-deps-18.0"
+      - "/usr/local/bin/clang-scan-deps-18.0"
+      - "/usr/sbin/clang-scan-deps-18.0"
+      - "/usr/bin/clang-scan-deps-18.0"
+      - "/sbin/clang-scan-deps-18.0"
+      - "/bin/clang-scan-deps-18.0"
+      - "/system/bin/clang-scan-deps-18.0"
+      - "/system/xbin/clang-scan-deps-18.0"
+      - "/usr/lib/aarch64-linux-android/21/bin/clang-scan-deps-18.0"
+      - "/usr/lib/aarch64-linux-android/21/sbin/clang-scan-deps-18.0"
+      - "/usr/lib/aarch64-linux-android/21/clang-scan-deps-18.0"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps-18"
+      - "/usr/local/sbin/clang-scan-deps-18"
+      - "/usr/local/bin/clang-scan-deps-18"
+      - "/usr/sbin/clang-scan-deps-18"
+      - "/usr/bin/clang-scan-deps-18"
+      - "/sbin/clang-scan-deps-18"
+      - "/bin/clang-scan-deps-18"
+      - "/system/bin/clang-scan-deps-18"
+      - "/system/xbin/clang-scan-deps-18"
+      - "/usr/lib/aarch64-linux-android/21/bin/clang-scan-deps-18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/clang-scan-deps-18"
+      - "/usr/lib/aarch64-linux-android/21/clang-scan-deps-18"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps18"
+      - "/usr/local/sbin/clang-scan-deps18"
+      - "/usr/local/bin/clang-scan-deps18"
+      - "/usr/sbin/clang-scan-deps18"
+      - "/usr/bin/clang-scan-deps18"
+      - "/sbin/clang-scan-deps18"
+      - "/bin/clang-scan-deps18"
+      - "/system/bin/clang-scan-deps18"
+      - "/system/xbin/clang-scan-deps18"
+      - "/usr/lib/aarch64-linux-android/21/bin/clang-scan-deps18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/clang-scan-deps18"
+      - "/usr/lib/aarch64-linux-android/21/clang-scan-deps18"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:468 (find_file)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:506 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/"
+    found: "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:12 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang++ 
+      Build flags: -g;-DANDROID;-fdata-sections;-ffunction-sections;-funwind-tables;-fstack-protector-strong;-no-canonical-prefixes;-D_FORTIFY_SOURCE=2;-Wformat;-Werror=format-security
+      Id flags: -c;--target=aarch64-none-linux-android21 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      The CXX compiler identification is Clang, found in:
+        /storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/4.3.0/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/Compiler/Clang-FindBinUtils.cmake:26 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_AR"
+    description: "LLVM archiver"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-ar-18.0"
+      - "llvm-ar-18"
+      - "llvm-ar18"
+      - "llvm-ar"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    searched_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ar-18.0"
+      - "/usr/local/sbin/llvm-ar-18.0"
+      - "/usr/local/bin/llvm-ar-18.0"
+      - "/usr/sbin/llvm-ar-18.0"
+      - "/usr/bin/llvm-ar-18.0"
+      - "/sbin/llvm-ar-18.0"
+      - "/bin/llvm-ar-18.0"
+      - "/system/bin/llvm-ar-18.0"
+      - "/system/xbin/llvm-ar-18.0"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ar-18.0"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ar-18.0"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ar-18.0"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ar-18"
+      - "/usr/local/sbin/llvm-ar-18"
+      - "/usr/local/bin/llvm-ar-18"
+      - "/usr/sbin/llvm-ar-18"
+      - "/usr/bin/llvm-ar-18"
+      - "/sbin/llvm-ar-18"
+      - "/bin/llvm-ar-18"
+      - "/system/bin/llvm-ar-18"
+      - "/system/xbin/llvm-ar-18"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ar-18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ar-18"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ar-18"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ar18"
+      - "/usr/local/sbin/llvm-ar18"
+      - "/usr/local/bin/llvm-ar18"
+      - "/usr/sbin/llvm-ar18"
+      - "/usr/bin/llvm-ar18"
+      - "/sbin/llvm-ar18"
+      - "/bin/llvm-ar18"
+      - "/system/bin/llvm-ar18"
+      - "/system/xbin/llvm-ar18"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ar18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ar18"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ar18"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ar"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/Compiler/Clang-FindBinUtils.cmake:38 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_RANLIB"
+    description: "Generate index for LLVM archive"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "llvm-ranlib-18.0"
+      - "llvm-ranlib-18"
+      - "llvm-ranlib18"
+      - "llvm-ranlib"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    searched_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ranlib-18.0"
+      - "/usr/local/sbin/llvm-ranlib-18.0"
+      - "/usr/local/bin/llvm-ranlib-18.0"
+      - "/usr/sbin/llvm-ranlib-18.0"
+      - "/usr/bin/llvm-ranlib-18.0"
+      - "/sbin/llvm-ranlib-18.0"
+      - "/bin/llvm-ranlib-18.0"
+      - "/system/bin/llvm-ranlib-18.0"
+      - "/system/xbin/llvm-ranlib-18.0"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ranlib-18.0"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ranlib-18.0"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ranlib-18.0"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ranlib-18"
+      - "/usr/local/sbin/llvm-ranlib-18"
+      - "/usr/local/bin/llvm-ranlib-18"
+      - "/usr/sbin/llvm-ranlib-18"
+      - "/usr/bin/llvm-ranlib-18"
+      - "/sbin/llvm-ranlib-18"
+      - "/bin/llvm-ranlib-18"
+      - "/system/bin/llvm-ranlib-18"
+      - "/system/xbin/llvm-ranlib-18"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ranlib-18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ranlib-18"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ranlib-18"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ranlib18"
+      - "/usr/local/sbin/llvm-ranlib18"
+      - "/usr/local/bin/llvm-ranlib18"
+      - "/usr/sbin/llvm-ranlib18"
+      - "/usr/bin/llvm-ranlib18"
+      - "/sbin/llvm-ranlib18"
+      - "/bin/llvm-ranlib18"
+      - "/system/bin/llvm-ranlib18"
+      - "/system/xbin/llvm-ranlib18"
+      - "/usr/lib/aarch64-linux-android/21/bin/llvm-ranlib18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/llvm-ranlib18"
+      - "/usr/lib/aarch64-linux-android/21/llvm-ranlib18"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/llvm-ranlib"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/Compiler/Clang-FindBinUtils.cmake:50 (find_program)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:12 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS"
+    description: "`clang-scan-deps` dependency scanner"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "clang-scan-deps-18.0"
+      - "clang-scan-deps-18"
+      - "clang-scan-deps18"
+      - "clang-scan-deps"
+    candidate_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/system/bin/"
+      - "/system/xbin/"
+      - "/usr/lib/aarch64-linux-android/21/bin/"
+      - "/usr/lib/aarch64-linux-android/21/sbin/"
+      - "/usr/lib/aarch64-linux-android/21/"
+    searched_directories:
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps-18.0"
+      - "/usr/local/sbin/clang-scan-deps-18.0"
+      - "/usr/local/bin/clang-scan-deps-18.0"
+      - "/usr/sbin/clang-scan-deps-18.0"
+      - "/usr/bin/clang-scan-deps-18.0"
+      - "/sbin/clang-scan-deps-18.0"
+      - "/bin/clang-scan-deps-18.0"
+      - "/system/bin/clang-scan-deps-18.0"
+      - "/system/xbin/clang-scan-deps-18.0"
+      - "/usr/lib/aarch64-linux-android/21/bin/clang-scan-deps-18.0"
+      - "/usr/lib/aarch64-linux-android/21/sbin/clang-scan-deps-18.0"
+      - "/usr/lib/aarch64-linux-android/21/clang-scan-deps-18.0"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps-18"
+      - "/usr/local/sbin/clang-scan-deps-18"
+      - "/usr/local/bin/clang-scan-deps-18"
+      - "/usr/sbin/clang-scan-deps-18"
+      - "/usr/bin/clang-scan-deps-18"
+      - "/sbin/clang-scan-deps-18"
+      - "/bin/clang-scan-deps-18"
+      - "/system/bin/clang-scan-deps-18"
+      - "/system/xbin/clang-scan-deps-18"
+      - "/usr/lib/aarch64-linux-android/21/bin/clang-scan-deps-18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/clang-scan-deps-18"
+      - "/usr/lib/aarch64-linux-android/21/clang-scan-deps-18"
+      - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps18"
+      - "/usr/local/sbin/clang-scan-deps18"
+      - "/usr/local/bin/clang-scan-deps18"
+      - "/usr/sbin/clang-scan-deps18"
+      - "/usr/bin/clang-scan-deps18"
+      - "/sbin/clang-scan-deps18"
+      - "/bin/clang-scan-deps18"
+      - "/system/bin/clang-scan-deps18"
+      - "/system/xbin/clang-scan-deps18"
+      - "/usr/lib/aarch64-linux-android/21/bin/clang-scan-deps18"
+      - "/usr/lib/aarch64-linux-android/21/sbin/clang-scan-deps18"
+      - "/usr/lib/aarch64-linux-android/21/clang-scan-deps18"
+    found: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64"
+      ENV{PATH}:
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/system/bin"
+        - "/system/xbin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/lib/aarch64-linux-android/21"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+      CMAKE_FIND_ROOT_PATH: "/home/Android/Sdk/ndk/27.3.13750724"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:12 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-XIqz9e"
+      binary: "/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-XIqz9e"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_C_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat "
+      CMAKE_C_FLAGS_DEBUG: "-fno-limit-debug-info "
+      CMAKE_EXE_LINKER_FLAGS: "-static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments  "
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-XIqz9e'
+        
+        Run Build Command(s): /usr/bin/ninja -v cmTC_41dae
+        [1/2] /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang --target=aarch64-none-linux-android21 --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat   -fPIE   -v -MD -MT CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -c /home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCCompilerABI.c
+        Android clang version 18.0.0 (https://github.com/HomuHomu833/llvm-custom 2598f0b84cec59a680d0cdc4891e20689593b008)
+        Target: aarch64-none-linux-android21
+        Thread model: posix
+        InstalledDir: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin
+         (in-process)
+         "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang" -cc1 -triple aarch64-none-linux-android21 -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +neon -target-feature +v8a -target-feature +fix-cortex-a53-835769 -target-abi aapcs -debug-info-kind=constructor -dwarf-version=4 -debugger-tuning=gdb -fdebug-compilation-dir=/sdcard/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-XIqz9e -v -ffunction-sections -fdata-sections -fcoverage-compilation-dir=/sdcard/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-XIqz9e -resource-dir /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18 -dependency-file CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -sys-header-deps -D ANDROID -D _FORTIFY_SOURCE=2 -isysroot /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/local/include -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/include -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include -Wformat -ferror-limit 19 -femulated-tls -stack-protector 2 -fno-signed-char -fgnuc-version=4.2.1 -target-feature +outline-atomics -target-feature -fmv -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -x c /home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 18.0.0 based upon LLVM 18.0.0 default target aarch64-linux-musl
+        ignoring nonexistent directory "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/local/include"
+        ignoring nonexistent directory "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include
+         /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android
+         /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include
+        End of search list.
+        [2/2] : && /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang --target=aarch64-none-linux-android21 --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments   -v CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -o cmTC_41dae   && :
+        Android clang version 18.0.0 (https://github.com/HomuHomu833/llvm-custom 2598f0b84cec59a680d0cdc4891e20689593b008)
+        Target: aarch64-none-linux-android21
+        Thread model: posix
+        InstalledDir: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin
+         "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld" --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -EL --fix-cortex-a53-843419 -z now -z relro -z max-page-size=4096 --hash-style=both --eh-frame-hdr -m aarch64linux -pie -dynamic-linker /system/bin/linker64 -o cmTC_41dae /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64 -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21 -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib --build-id=sha1 --no-rosegment --no-undefined-version --fatal-warnings --no-undefined CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl -lc /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:12 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include]
+          add: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android]
+          add: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include]
+        end of search list found
+        collapse include dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include]
+        collapse include dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android]
+        collapse include dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include]
+        implicit include dirs: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:12 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-XIqz9e']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_41dae]
+        ignore line: [[1/2] /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang --target=aarch64-none-linux-android21 --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat   -fPIE   -v -MD -MT CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -c /home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCCompilerABI.c]
+        ignore line: [Android clang version 18.0.0 (https://github.com/HomuHomu833/llvm-custom 2598f0b84cec59a680d0cdc4891e20689593b008)]
+        ignore line: [Target: aarch64-none-linux-android21]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin]
+        ignore line: [ (in-process)]
+        ignore line: [ "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang" -cc1 -triple aarch64-none-linux-android21 -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +neon -target-feature +v8a -target-feature +fix-cortex-a53-835769 -target-abi aapcs -debug-info-kind=constructor -dwarf-version=4 -debugger-tuning=gdb -fdebug-compilation-dir=/sdcard/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-XIqz9e -v -ffunction-sections -fdata-sections -fcoverage-compilation-dir=/sdcard/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-XIqz9e -resource-dir /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18 -dependency-file CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -sys-header-deps -D ANDROID -D _FORTIFY_SOURCE=2 -isysroot /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/local/include -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/include -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include -Wformat -ferror-limit 19 -femulated-tls -stack-protector 2 -fno-signed-char -fgnuc-version=4.2.1 -target-feature +outline-atomics -target-feature -fmv -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -x c /home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 18.0.0 based upon LLVM 18.0.0 default target aarch64-linux-musl]
+        ignore line: [ignoring nonexistent directory "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include]
+        ignore line: [ /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android]
+        ignore line: [ /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [[2/2] : && /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang --target=aarch64-none-linux-android21 --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -static-libstdc++ -Wl --build-id=sha1 -Wl --no-rosegment -Wl --no-undefined-version -Wl --fatal-warnings -Wl --no-undefined -Qunused-arguments   -v CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o -o cmTC_41dae   && :]
+        ignore line: [Android clang version 18.0.0 (https://github.com/HomuHomu833/llvm-custom 2598f0b84cec59a680d0cdc4891e20689593b008)]
+        ignore line: [Target: aarch64-none-linux-android21]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin]
+        link line: [ "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld" --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -EL --fix-cortex-a53-843419 -z now -z relro -z max-page-size=4096 --hash-style=both --eh-frame-hdr -m aarch64linux -pie -dynamic-linker /system/bin/linker64 -o cmTC_41dae /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64 -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21 -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib --build-id=sha1 --no-rosegment --no-undefined-version --fatal-warnings --no-undefined CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl -lc /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld] ==> ignore
+          arg [--sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot] ==> ignore
+          arg [-EL] ==> ignore
+          arg [--fix-cortex-a53-843419] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-zmax-page-size=4096] ==> ignore
+          arg [--hash-style=both] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [aarch64linux] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/system/bin/linker64] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_41dae] ==> ignore
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o] ==> obj [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o]
+          arg [-L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64] ==> dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64]
+          arg [-L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21] ==> dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21]
+          arg [-L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android] ==> dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android]
+          arg [-L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib] ==> dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib]
+          arg [--build-id=sha1] ==> ignore
+          arg [--no-rosegment] ==> ignore
+          arg [--no-undefined-version] ==> ignore
+          arg [--fatal-warnings] ==> ignore
+          arg [--no-undefined] ==> ignore
+          arg [CMakeFiles/cmTC_41dae.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a] ==> lib [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-ldl] ==> lib [dl]
+          arg [-lc] ==> lib [c]
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a] ==> lib [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-ldl] ==> lib [dl]
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o] ==> obj [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+        linker tool for 'C': /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld
+        remove lib [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a]
+        remove lib [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a]
+        collapse library dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64]
+        collapse library dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21]
+        collapse library dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android]
+        collapse library dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib]
+        implicit libs: [-l:libunwind.a;dl;c;-l:libunwind.a;dl]
+        implicit objs: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+        implicit dirs: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:12 (project)"
+    message: |
+      Running the C compiler's linker: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld" "-v"
+      LLD 18.0.0 (compatible with GNU linkers)
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:12 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-1319Om"
+      binary: "/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-1319Om"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang-scan-deps"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_CXX_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat  "
+      CMAKE_CXX_FLAGS_DEBUG: "-fno-limit-debug-info "
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_EXE_LINKER_FLAGS: "-static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments  "
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-1319Om'
+        
+        Run Build Command(s): /usr/bin/ninja -v cmTC_1189a
+        [1/2] /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat    -fPIE   -v -MD -MT CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -c /home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp
+        Android clang version 18.0.0 (https://github.com/HomuHomu833/llvm-custom 2598f0b84cec59a680d0cdc4891e20689593b008)
+        Target: aarch64-none-linux-android21
+        Thread model: posix
+        InstalledDir: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin
+         (in-process)
+         "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang++" -cc1 -triple aarch64-none-linux-android21 -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +neon -target-feature +v8a -target-feature +fix-cortex-a53-835769 -target-abi aapcs -debug-info-kind=constructor -dwarf-version=4 -debugger-tuning=gdb -fdebug-compilation-dir=/sdcard/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-1319Om -v -ffunction-sections -fdata-sections -fcoverage-compilation-dir=/sdcard/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-1319Om -resource-dir /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18 -dependency-file CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -D ANDROID -D _FORTIFY_SOURCE=2 -isysroot /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/c++/v1 -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/local/include -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/include -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include -Wformat -fdeprecated-macro -ferror-limit 19 -femulated-tls -stack-protector 2 -fno-signed-char -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -x c++ /home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 18.0.0 based upon LLVM 18.0.0 default target aarch64-linux-musl
+        ignoring nonexistent directory "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/local/include"
+        ignoring nonexistent directory "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/c++/v1
+         /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include
+         /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android
+         /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include
+        End of search list.
+        [2/2] : && /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments   -v CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_1189a   && :
+        Android clang version 18.0.0 (https://github.com/HomuHomu833/llvm-custom 2598f0b84cec59a680d0cdc4891e20689593b008)
+        Target: aarch64-none-linux-android21
+        Thread model: posix
+        InstalledDir: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin
+         "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld" --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -EL --fix-cortex-a53-843419 -z now -z relro -z max-page-size=4096 --hash-style=both --eh-frame-hdr -m aarch64linux -pie -dynamic-linker /system/bin/linker64 -o cmTC_1189a /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64 -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21 -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib --build-id=sha1 --no-rosegment --no-undefined-version --fatal-warnings --no-undefined CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl -lc /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:12 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/c++/v1]
+          add: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include]
+          add: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android]
+          add: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include]
+        end of search list found
+        collapse include dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/c++/v1] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/c++/v1]
+        collapse include dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include]
+        collapse include dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android]
+        collapse include dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include]
+        implicit include dirs: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/c++/v1;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:12 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-1319Om']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_1189a]
+        ignore line: [[1/2] /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat    -fPIE   -v -MD -MT CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -c /home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Android clang version 18.0.0 (https://github.com/HomuHomu833/llvm-custom 2598f0b84cec59a680d0cdc4891e20689593b008)]
+        ignore line: [Target: aarch64-none-linux-android21]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin]
+        ignore line: [ (in-process)]
+        ignore line: [ "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang++" -cc1 -triple aarch64-none-linux-android21 -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +neon -target-feature +v8a -target-feature +fix-cortex-a53-835769 -target-abi aapcs -debug-info-kind=constructor -dwarf-version=4 -debugger-tuning=gdb -fdebug-compilation-dir=/sdcard/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-1319Om -v -ffunction-sections -fdata-sections -fcoverage-compilation-dir=/sdcard/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/CMakeScratch/TryCompile-1319Om -resource-dir /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18 -dependency-file CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -D ANDROID -D _FORTIFY_SOURCE=2 -isysroot /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/c++/v1 -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include -internal-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/local/include -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/include -internal-externc-isystem /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include -Wformat -fdeprecated-macro -ferror-limit 19 -femulated-tls -stack-protector 2 -fno-signed-char -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -x c++ /home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 18.0.0 based upon LLVM 18.0.0 default target aarch64-linux-musl]
+        ignore line: [ignoring nonexistent directory "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/c++/v1]
+        ignore line: [ /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/include]
+        ignore line: [ /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include/aarch64-linux-android]
+        ignore line: [ /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [[2/2] : && /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -static-libstdc++ -Wl --build-id=sha1 -Wl --no-rosegment -Wl --no-undefined-version -Wl --fatal-warnings -Wl --no-undefined -Qunused-arguments   -v CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_1189a   && :]
+        ignore line: [Android clang version 18.0.0 (https://github.com/HomuHomu833/llvm-custom 2598f0b84cec59a680d0cdc4891e20689593b008)]
+        ignore line: [Target: aarch64-none-linux-android21]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin]
+        link line: [ "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld" --sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot -EL --fix-cortex-a53-843419 -z now -z relro -z max-page-size=4096 --hash-style=both --eh-frame-hdr -m aarch64linux -pie -dynamic-linker /system/bin/linker64 -o cmTC_1189a /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64 -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21 -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android -L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib --build-id=sha1 --no-rosegment --no-undefined-version --fatal-warnings --no-undefined CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl -lc /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld] ==> ignore
+          arg [--sysroot=/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot] ==> ignore
+          arg [-EL] ==> ignore
+          arg [--fix-cortex-a53-843419] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-zmax-page-size=4096] ==> ignore
+          arg [--hash-style=both] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [aarch64linux] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/system/bin/linker64] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_1189a] ==> ignore
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o] ==> obj [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o]
+          arg [-L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64] ==> dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64]
+          arg [-L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21] ==> dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21]
+          arg [-L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android] ==> dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android]
+          arg [-L/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib] ==> dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib]
+          arg [--build-id=sha1] ==> ignore
+          arg [--no-rosegment] ==> ignore
+          arg [--no-undefined-version] ==> ignore
+          arg [--fatal-warnings] ==> ignore
+          arg [--no-undefined] ==> ignore
+          arg [CMakeFiles/cmTC_1189a.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-Bstatic] ==> search static
+          arg [-lc++] ==> lib [c++]
+          arg [-Bdynamic] ==> search dynamic
+          arg [-lm] ==> lib [m]
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a] ==> lib [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-ldl] ==> lib [dl]
+          arg [-lc] ==> lib [c]
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a] ==> lib [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a]
+          arg [-l:libunwind.a] ==> lib [-l:libunwind.a]
+          arg [-ldl] ==> lib [dl]
+          arg [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o] ==> obj [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+        linker tool for 'CXX': /home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld
+        remove lib [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a]
+        remove lib [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/libclang_rt.builtins-aarch64-android.a]
+        collapse library dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64]
+        collapse library dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21]
+        collapse library dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android]
+        collapse library dir [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib] ==> [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib]
+        implicit libs: [c++;m;-l:libunwind.a;dl;c;-l:libunwind.a;dl]
+        implicit objs: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+        implicit dirs: [/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/lib/clang/18/lib/linux/aarch64;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android/21;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib/aarch64-linux-android;/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/sysroot/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/home/Android/Sdk/cmake/4.3.0/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:12 (project)"
+    message: |
+      Running the CXX compiler's linker: "/home/Android/Sdk/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-arm64/bin/ld.lld" "-v"
+      LLD 18.0.0 (compatible with GNU linkers)
+...

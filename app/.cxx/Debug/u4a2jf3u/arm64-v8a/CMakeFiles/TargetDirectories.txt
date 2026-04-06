@@ -1,0 +1,3 @@
+/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/myapplication.dir
+/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/edit_cache.dir
+/storage/emulated/0/AndroidCSProjects/FuckProtect/app/.cxx/Debug/u4a2jf3u/arm64-v8a/CMakeFiles/rebuild_cache.dir

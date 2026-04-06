@@ -1,0 +1,326 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  # ──────────────────────────────────────────────────────────────────────
+  # Job 1: Build Protector CLI (pure JVM — no Android SDK needed)
+  # ──────────────────────────────────────────────────────────────────────
+  build-protector:
+    name: Build Protector CLI
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build common module
+        run: ./gradlew :common:assemble --no-daemon
+
+      - name: Build protector module
+        run: ./gradlew :protector:assemble --no-daemon
+
+      - name: Run unit tests
+        run: ./gradlew :common:test :protector:test --no-daemon
+
+      - name: Install protector CLI
+        run: ./gradlew :protector:installDist --no-daemon
+
+      - name: Verify CLI works
+        run: ./protector/build/install/protector/bin/protector --version
+
+      - name: Upload protector CLI
+        uses: actions/upload-artifact@v4
+        with:
+          name: protector-cli
+          path: protector/build/install/protector/
+          retention-days: 30
+
+  # ──────────────────────────────────────────────────────────────────────
+  # Job 2: Build Shell Runtime (Android library + native C++ code)
+  # ──────────────────────────────────────────────────────────────────────
+  build-shell:
+    name: Build Shell Runtime
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install required SDK components
+        run: |
+          sdkmanager "platforms;android-36" \
+                     "build-tools;34.0.0" \
+                     "ndk;27.3.13750724" \
+                     "cmake;4.3.0"
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build shell native libraries (all ABIs)
+        run: ./gradlew :shell:assembleDebug --no-daemon
+
+      - name: Run shell unit tests
+        run: ./gradlew :shell:testDebugUnitTest --no-daemon
+
+      - name: Verify native libraries exist
+        run: |
+          echo "Checking native libraries..."
+          for abi in arm64-v8a armeabi-v7a x86 x86_64; do
+            lib="shell/build/intermediates/cxx/Debug/obj/$abi/libshell.so"
+            if [ -f "$lib" ]; then
+              size=$(stat -c%s "$lib")
+              echo "  ✅ $abi: libshell.so ($size bytes)"
+            else
+              echo "  ❌ $abi: libshell.so NOT FOUND"
+              exit 1
+            fi
+          done
+
+      - name: Check for plaintext strings in native library
+        run: |
+          echo "Checking for plaintext 'fuckprotect' in native libs..."
+          found=0
+          for abi in arm64-v8a armeabi-v7a x86 x86_64; do
+            lib="shell/build/intermediates/cxx/Debug/obj/$abi/libshell.so"
+            if [ -f "$lib" ]; then
+              if strings "$lib" | grep -qi "fuckprotect"; then
+                echo "  ❌ $abi: FOUND plaintext 'fuckprotect'"
+                found=1
+              else
+                echo "  ✅ $abi: No plaintext 'fuckprotect'"
+              fi
+            fi
+          done
+          if [ $found -eq 1 ]; then
+            echo "WARNING: Some strings may not be encrypted. Review string_obfuscate.cpp"
+          fi
+
+      - name: Upload native libraries
+        uses: actions/upload-artifact@v4
+        with:
+          name: shell-native-libs
+          path: |
+            shell/build/intermediates/cxx/Debug/obj/
+          retention-days: 30
+
+  # ──────────────────────────────────────────────────────────────────────
+  # Job 3: Build Test App (original unprotected APK)
+  # ──────────────────────────────────────────────────────────────────────
+  build-test-app:
+    name: Build Test App
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install required SDK components
+        run: |
+          sdkmanager "platforms;android-36" \
+                     "build-tools;34.0.0"
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build test app release APK
+        run: ./gradlew :app:assembleRelease --no-daemon
+
+      - name: Upload test APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-app-apk
+          path: app/build/outputs/apk/release/*.apk
+          retention-days: 30
+
+  # ──────────────────────────────────────────────────────────────────────
+  # Job 4: Code Quality & Static Analysis
+  # ──────────────────────────────────────────────────────────────────────
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install required SDK components
+        run: |
+          sdkmanager "platforms;android-36" \
+                     "ndk;27.3.13750724" \
+                     "cmake;4.3.0"
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run lint checks
+        run: ./gradlew lint --no-daemon || true
+
+      - name: Upload lint reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lint-reports
+          path: '**/build/reports/lint-results-*.html'
+          retention-days: 30
+
+      - name: Check for empty directories
+        run: |
+          empty=$(find . -type d -empty \
+            ! -path "./.git/*" \
+            ! -path "./build/*" \
+            ! -path "./.gradle/*" \
+            ! -path "*/.cxx/*" \
+            ! -path "*/build/*" 2>/dev/null)
+          if [ -n "$empty" ]; then
+            echo "Found empty directories (should be cleaned up):"
+            echo "$empty"
+          else
+            echo "✅ No empty directories found"
+          fi
+
+      - name: Verify no hardcoded keys
+        run: |
+          echo "Checking for hardcoded AES keys in source..."
+          # Check for common hardcoded key patterns (excluding test files and docs)
+          if grep -rn "0x42, 0x42, 0x42" --include="*.c" --include="*.cpp" \
+              shell/src/main/cpp/ 2>/dev/null; then
+            echo "⚠️ Found potential hardcoded key pattern"
+          else
+            echo "✅ No obvious hardcoded AES keys found"
+          fi
+
+  # ──────────────────────────────────────────────────────────────────────
+  # Job 5: End-to-End Integration Test
+  # ──────────────────────────────────────────────────────────────────────
+  integration-test:
+    name: Integration Test
+    needs: [build-protector, build-test-app]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download protector CLI
+        uses: actions/download-artifact@v4
+        with:
+          name: protector-cli
+          path: protector-cli/
+
+      - name: Download test APK
+        uses: actions/download-artifact@v4
+        with:
+          name: test-app-apk
+          path: test-apk/
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Create debug keystore
+        run: |
+          keytool -genkeypair \
+            -v -keystore debug.keystore \
+            -alias androiddebugkey \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass android -keypass android \
+            -dname "CN=Android Debug,O=Android,C=US"
+
+      - name: Make protector executable
+        run: chmod +x protector-cli/bin/protector
+
+      - name: Find test APK
+        run: |
+          APK=$(find test-apk -name "*.apk" | head -1)
+          echo "Test APK: $APK"
+          echo "APK_PATH=$APK" >> $GITHUB_ENV
+
+      - name: Run protector on test APK
+        run: |
+          protector-cli/bin/protector \
+            --input "$APK_PATH" \
+            --output protected.apk \
+            --keystore debug.keystore \
+            --key-alias androiddebugkey \
+            --key-pass android \
+            --store-pass android \
+            --verbose
+
+      - name: Verify protected APK exists
+        run: |
+          if [ -f protected.apk ]; then
+            size=$(stat -c%s protected.apk)
+            echo "✅ Protected APK created: $size bytes"
+          else
+            echo "❌ Protected APK not created"
+            exit 1
+          fi
+
+      - name: Verify protected APK structure
+        run: |
+          echo "Checking protected APK structure..."
+          unzip -l protected.apk | grep -E "(AndroidManifest|classes.dex|libshell.so|fp_payload.dat)" || {
+            echo "❌ Missing expected files in protected APK"
+            exit 1
+          }
+          echo "✅ Protected APK has expected structure"
+
+      - name: Upload protected APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: protected-apk
+          path: protected.apk
+          retention-days: 30
