@@ -101,11 +101,14 @@ class ApkParser {
     fun parseApplicationClass(extracted: ExtractedApk): String? {
         val manifest = extracted.manifest ?: return null
         val bytes = manifest.readBytes()
+        System.err.println("DEBUG: Manifest size: ${bytes.size} bytes")
+        System.err.println("DEBUG: First 8 bytes: ${bytes.take(8).joinToString(" ") { "%02x".format(it) }}")
         // Check if it's binary AXML (starts with AXML\x00\x00\x00\x00)
-        return if (bytes.size >= 8 &&
+        val isAxml = bytes.size >= 8 &&
             bytes[0] == 0x41.toByte() && bytes[1] == 0x58.toByte() &&
             bytes[2] == 0x4D.toByte() && bytes[3] == 0x4C.toByte()
-        ) {
+        System.err.println("DEBUG: Is AXML: $isAxml")
+        return if (isAxml) {
             parseApplicationClassFromAxml(bytes)
         } else {
             parseApplicationClassFromXml(bytes.decodeToString())
