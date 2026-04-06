@@ -10,23 +10,29 @@ if(ENABLE_OBFUSCATION)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mllvm -fla -mllvm -sub -mllvm -bcf")
 endif()
 
-# Source files - matching dpt-shell structure
+# Source files - matching dpt-shell structure exactly
 set(SHELL_SOURCES
     dpt.cpp
+    dpt_crypto.cpp
+    dpt_hook.cpp
+    dpt_jni.cpp
     dpt_risk.cpp
     dpt_util.cpp
-    dpt_protect.cpp
-    dpt_hook.cpp
-    dpt_plt.cpp
-    dpt_anti_hook.cpp
-    dpt_verify.cpp
-    dpt_integrity.cpp
-    dpt_crypto.c
-    dpt_key.c
-    dpt_string.cpp
-    rc4/rc4.c
     common/dpt_string.cpp
-    reflect/java_lang_System.cpp
+    dex/CodeItem.cpp
+    dex/MultiDexCode.cpp
+    dex/dex_file.cpp
+    rc4/rc4.c
+    reflect/android_app_ActivityThread.cpp
+    reflect/android_app_Application.cpp
+    reflect/android_app_ContextImpl.cpp
+    reflect/android_app_LoadedApk.cpp
+    reflect/android_content_pm_ApplicationInfo.cpp
+    reflect/dalvik_system_BaseDexClassLoader.cpp
+    reflect/dalvik_system_DexPathList.cpp
+    reflect/java_io_File.cpp
+    reflect/java_lang_Class.cpp
+    reflect/java_util_ArrayList.cpp
 )
 
 add_library(shell SHARED ${SHELL_SOURCES})
